@@ -550,7 +550,7 @@ export default function Game(){
     //make the moves slower
     React.useEffect(()=>{
         
-        const fill  = setTimeout(fillBoard, 65);
+        const fill  = setTimeout(fillBoard, 25);
         const check  = setTimeout(checkBoard, 10);
         return () => {
             clearTimeout(check)
