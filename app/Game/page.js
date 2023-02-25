@@ -580,7 +580,6 @@ export default function Game(){
     }
 
     const handleEnd = () =>{
-        console.log("yarrak")
         if(endSquare.current === null || firstSquare.current === null) return
         for(let i = 0; i < boardLength ** 2; i++){
             if(board[i] === blank) return
@@ -588,13 +587,11 @@ export default function Game(){
         const fId = parseInt(firstSquare.current.id)
         const lId = parseInt(endSquare.current.id)
         const isNeighbour = Math.abs(lId - fId);
-        //if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
+        if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
         setBoard(prevBoard => {
-            console.log("meme")
             const newBoard = [...prevBoard];
             if(endSquare.current.name === "Watermelon" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple" ){
                 increment(100);
-                console.log("hiya")
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(firstSquare.current.name === prevBoard[i].name){
@@ -606,7 +603,6 @@ export default function Game(){
             }
             else if(firstSquare.current.name === "Watermelon" && endSquare.current.name !== "Watermelon" && endSquare.current.name !== "Bomb" && endSquare.current.name !== "Pineapple"){
                 increment(10);
-                console.log("hiya")
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(endSquare.current.name === prevBoard[i].name){
@@ -618,7 +614,6 @@ export default function Game(){
             }
             else if(endSquare.current.name === "Bomb" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple"){
                 increment(100);
-                console.log("hiya")
                 moves.current--;
                 if(prevBoard[fId]) {newBoard[fId] = blank; increment(10);};
                 if(prevBoard[fId - 1]) if((fId - 1) % boardLength !== 7){newBoard[fId - 1] = blank; increment(10);};
@@ -633,7 +628,6 @@ export default function Game(){
             }
             else if(firstSquare.current.name === "Bomb" && endSquare.current.name !== "Watermelon" && endSquare.current.name !== "Bomb" && endSquare.current.name !== "Pineapple"){
                 increment(100);
-                console.log("hiya")
                 moves.current--;
                 if(prevBoard[lId]) {newBoard[lId] = blank; increment(10);};
                 if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== 7){newBoard[lId - 1] = blank; increment(10);};
@@ -648,7 +642,6 @@ export default function Game(){
             }
             else if(firstSquare.current.name === "Pineapple" && endSquare.current.name !== "Watermelon" && endSquare.current.name !== "Bomb" && endSquare.current.name !== "Pineapple"){
                 increment(50);
-                console.log("hiya")
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(i % 8 === lId % 8 || Math.floor(i / 8) === Math.floor(lId / 8)){
@@ -659,7 +652,6 @@ export default function Game(){
             }
             else if(endSquare.current.name === "Pineapple" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple"){
                 increment(50);
-                console.log("hiya")
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(i % 8 === fId % 8 || Math.floor(i / 8) === Math.floor(fId / 8)){
@@ -670,7 +662,6 @@ export default function Game(){
             }
             else if((endSquare.current.name === "Pineapple" && firstSquare.current.name === "Bomb") || (firstSquare.current.name === "Pineapple" && endSquare.current.name === "Bomb")){
                 increment(250);
-                console.log("hiya")
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if((i % 8 === lId % 8 || Math.floor(i / 8) === Math.floor(lId / 8)) || 
@@ -683,7 +674,6 @@ export default function Game(){
             }
             else if(endSquare.current.name === "Bomb" && firstSquare.current.name === "Bomb"){
                 increment(350);
-                console.log("hiya")
                 moves.current--;
                 if(prevBoard[lId]) {newBoard[lId] = blank; increment(10);};
                 if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== 7){newBoard[lId - 1] = blank; increment(10);};
@@ -719,7 +709,6 @@ export default function Game(){
             }
             else if((endSquare.current.name === "Watermelon" && firstSquare.current.name === "Watermelon")){
                 increment(500);
-                console.log("hiya")
                 for(let i = 0; i < boardLength ** 2; i++){
                     newBoard[i] = blank
                     increment(10);
@@ -727,7 +716,6 @@ export default function Game(){
             }
             else if((endSquare.current.name === "Watermelon" && firstSquare.current.name === "Pineapple") || (endSquare.current.name === "Pineapple" && firstSquare.current.name === "Watermelon")){
                 increment(400);
-                console.log("hiya")
                 moves.current--;
                 const temp = fruits[Math.floor(Math.random() * fruits.length)]
                 for(let i = 0; i < boardLength ** 2; i++){
@@ -741,7 +729,6 @@ export default function Game(){
             }
             else if((endSquare.current.name === "Watermelon" && firstSquare.current.name === "Bomb") || (endSquare.current.name === "Bomb" && firstSquare.current.name === "Watermelon")){
                 increment(450);
-                console.log("hiya")
                 moves.current--;
                 const temp = fruits[Math.floor(Math.random() * fruits.length)]
                 for(let i = 0; i < boardLength ** 2; i++){
@@ -755,7 +742,6 @@ export default function Game(){
             }
             else if((endSquare.current.name === "Pineapple" && firstSquare.current.name === "Pineapple")){
                 increment(200);
-                console.log("hiya")
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     const temp1 = i % 8;
