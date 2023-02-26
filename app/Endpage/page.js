@@ -1,13 +1,15 @@
 "use client"
 import styles from "./Endpage.module.css"
-import {useGlobalScoreBoard} from "../context"
+import { useEffect, useState } from "react"
 
 export default function EndPage(){
-    const {score} = useGlobalScoreBoard()
-
+    const [score, setScore] = useState("Loading")
+    useEffect(()=>{
+        if(typeof window !== undefined) setScore(sessionStorage.getItem("score"))
+    })
     return(
         <main className={styles.main}>
-            {score.current}
+            {score}
         </main>
     )
 }

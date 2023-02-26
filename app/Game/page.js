@@ -4,14 +4,9 @@ import React from "react"
 import { boardLength, fruits, blank, watermelon, bomb, pineapple } from "./constants"
 import Image from "next/image"
 import "../globals.css"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
-import {useGlobalScoreBoard} from "../context"
 
 export default function Game(){
-
-    //Redirect to endScreen when the game is over
-    const router = useRouter()
 
     //Current Board of the game.
     const [board, setBoard] = React.useState([])
@@ -24,7 +19,11 @@ export default function Game(){
     const swapped = React.useRef(false)
 
     //The Score
-    const {score, increment} = useGlobalScoreBoard()
+    const score = React.useRef(0);
+
+    function increment (s){
+        score.current += s;
+    }
     //Remaining Moves
     const moves = React.useRef(30)
 
@@ -572,6 +571,11 @@ export default function Game(){
     React.useEffect(()=>{
         score.current = 0;
     }, [])
+
+    React.useEffect(()=>{
+        if(typeof window !== undefined) sessionStorage.setItem("score", score.current)
+    },[score.current])
+
     const handleStart = (e) =>{
         firstSquare.current = e.target
     }
@@ -591,7 +595,7 @@ export default function Game(){
         setBoard(prevBoard => {
             const newBoard = [...prevBoard];
             if(endSquare.current.name === "Watermelon" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple" ){
-                increment(100);
+                increment(150);
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(firstSquare.current.name === prevBoard[i].name){
@@ -602,7 +606,7 @@ export default function Game(){
                 newBoard[endSquare.current.id] = blank
             }
             else if(firstSquare.current.name === "Watermelon" && endSquare.current.name !== "Watermelon" && endSquare.current.name !== "Bomb" && endSquare.current.name !== "Pineapple"){
-                increment(10);
+                increment(150);
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(endSquare.current.name === prevBoard[i].name){
