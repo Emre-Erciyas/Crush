@@ -7,7 +7,7 @@ export default function EndPage(){
 
     return(
         <main className={styles.main}>
-            {sessionStorage.getItem("score")}
+            {score.current}
         </main>
     )
 }

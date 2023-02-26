@@ -575,10 +575,6 @@ export default function Game(){
     const handleStart = (e) =>{
         firstSquare.current = e.target
     }
-    React.useEffect(() => {
-        sessionStorage.setItem("score", score.current);
-      }, [score.current]);
-
     const handleDrop = (e) =>{
         endSquare.current = e.target
     }
