@@ -26,7 +26,7 @@ export default function Game(){
     //The Score
     const {score, increment} = useGlobalScoreBoard()
     //Remaining Moves
-    const moves = React.useRef(5)
+    const moves = React.useRef(30)
 
     //Ref to Link component
     const linkRef = React.useRef(null)
@@ -550,7 +550,7 @@ export default function Game(){
     //make the moves slower
     React.useEffect(()=>{
         
-        const fill  = setTimeout(fillBoard, 25);
+        const fill  = setTimeout(fillBoard, 40);
         const check  = setTimeout(checkBoard, 10);
         return () => {
             clearTimeout(check)
@@ -569,11 +569,15 @@ export default function Game(){
         setTimeout(clicker, 300);
         return () => clearTimeout(clicker)
     })
-    
+    React.useEffect(()=>{
+        score.current = 0;
+    }, [])
     const handleStart = (e) =>{
         firstSquare.current = e.target
     }
-
+    React.useEffect(() => {
+        sessionStorage.setItem("score", score.current);
+      }, [score.current]);
 
     const handleDrop = (e) =>{
         endSquare.current = e.target
