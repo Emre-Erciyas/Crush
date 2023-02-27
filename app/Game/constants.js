@@ -43,3 +43,5 @@ export const pineapple = {
     src: Pineapple,
     name: "Pineapple"
 }
+
+export const animationDuration = 125;
