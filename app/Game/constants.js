@@ -8,6 +8,7 @@ import Blank from "../../public/Blank.png"
 import Watermelon from "../../public/Watermelon.png"
 import Bomb from "../../public/Bomb.png"
 import Pineapple from "../../public/Pineapple.png"
+import Lightning from "../../public/Lightning.png"
 export const boardLength = 8;
 export const fruits = [
     {src: Lemon,
@@ -44,4 +45,8 @@ export const pineapple = {
     name: "Pineapple"
 }
 
-export const animationDuration = 125;
+export const lightning = {
+    src: Lightning
+}
+
+export const animationDuration = 2210;

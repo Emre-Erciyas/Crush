@@ -1,7 +1,7 @@
 "use client"
 import styles from "./Game.module.css"
 import React, { useRef } from "react"
-import { boardLength, fruits, blank, watermelon, bomb, pineapple, animationDuration } from "./constants"
+import { boardLength, fruits, blank, watermelon, bomb, pineapple, animationDuration, lightning } from "./constants"
 import Image from "next/image"
 import "../globals.css"
 import Link from "next/link"
@@ -40,6 +40,11 @@ export default function Game(){
     const rotated135Ref = React.useRef(null)
     const rotated225Ref = React.useRef(null)
     const rotated315Ref = React.useRef(null)
+    const explosionRef = React.useRef(null)
+    const explosion2Ref = React.useRef(null)
+    const boltRef = React.useRef(null)
+
+    const boltsRef = React.useRef(new Array(boardLength ** 2))
     //animation going on
     let isAnimation = useRef(false);
     
@@ -585,7 +590,7 @@ export default function Game(){
         const clicker = () =>{
             if(linkRef.current) linkRef.current.click();
         }
-        setTimeout(clicker, 300);
+        setTimeout(clicker, 1600);
         return () => clearTimeout(clicker)
     })
     React.useEffect(()=>{
@@ -618,16 +623,16 @@ export default function Game(){
         rotated135Ref.current.style.visibility = 'visible'
         rotated225Ref.current.style.visibility = 'visible'
         rotated315Ref.current.style.visibility = 'visible'
-        verticalRef.current.style.left = `${(id % 8) * 80 + 27}px`
-        horizontalRef.current.style.top = `${Math.floor(id / 8) * 80 + 30}px`
-        rotated45Ref.current.style.left = `${(id % 8) * 80 + 27}px`
+        verticalRef.current.style.left = `${(id % 8) * 80 + 30}px`
+        horizontalRef.current.style.top = `${Math.floor(id / 8) * 80 + 25}px`
+        rotated45Ref.current.style.left = `${(id % 8) * 80 + 32}px`
         rotated135Ref.current.style.left = `${(id % 8) * 80 + 60}px`
         rotated225Ref.current.style.left = `${(id % 8) * 80 + 20}px`
-        rotated315Ref.current.style.left = `${(id % 8) * 80 + 45}px`
-        rotated45Ref.current.style.top = `${Math.floor(id / 8) * 80 + 40}px`
+        rotated315Ref.current.style.left = `${(id % 8) * 80 + 50}px`
+        rotated45Ref.current.style.top = `${Math.floor(id / 8) * 80 + 26}px`
         rotated135Ref.current.style.top = `${Math.floor(id / 8) * 80 + 40}px`
         rotated225Ref.current.style.top = `${Math.floor(id / 8) * 80 + 40}px`
-        rotated315Ref.current.style.top = `${Math.floor(id / 8) * 80 + 60}px`
+        rotated315Ref.current.style.top = `${Math.floor(id / 8) * 80 + 50}px`
         isAnimation.current = true;
         setTimeout(() => makeInvisible(verticalRef), animationDuration);
         setTimeout(() => makeInvisible(horizontalRef), animationDuration);
@@ -635,8 +640,40 @@ export default function Game(){
         setTimeout(() => makeInvisible(rotated135Ref), animationDuration);
         setTimeout(() => makeInvisible(rotated225Ref), animationDuration);
         setTimeout(() => makeInvisible(rotated315Ref), animationDuration);
+        setTimeout(() => makeInvisible(rotated315Ref), animationDuration);
     }
 
+    const explosion = (id) => {
+        explosionRef.current.style.visibility = 'visible'
+        explosionRef.current.style.left = `${(id % 8) * 80 + 10 }px`
+        explosionRef.current.style.top = `${Math.floor(id / 8) * 80 + 10}px`
+        isAnimation.current = true;
+        setTimeout(() => makeInvisible(explosionRef), animationDuration);
+
+    }
+    const explosion2 = (id) => {
+        explosion2Ref.current.style.visibility = 'visible'
+        explosion2Ref.current.style.left = `${(id % 8) * 80 + 10 }px`
+        explosion2Ref.current.style.top = `${Math.floor(id / 8) * 80 + 10}px`
+        isAnimation.current = true;
+        setTimeout(() => makeInvisible(explosion2Ref), animationDuration);
+    }
+    const lightningTime = (id, endId) => {
+        const x1 = id % 8;
+        const x2 = endId % 8;
+        const y1 = Math.floor(id / 8);
+        const y2 = Math.floor(endId / 8);
+        boltRef.current.style.visibility = 'visible'
+        boltRef.current.style.left = `${x1 * 80 + 40}px`
+        boltRef.current.style.top = `${y1 * 80 + 40}px`
+        boltRef.current.style.height = `${Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * 80}px`
+        const angleRadians = Math.atan2(y2 - y1, x2 - x1);
+        const angleDegrees = angleRadians * (180 / Math.PI);
+        boltRef.current.style.transform = `rotate(${angleDegrees - 90}deg)`;
+        console.log(`${x1 * 80 + 35}px`)
+        isAnimation.current = true;
+        setTimeout(() => makeInvisible(boltRef), animationDuration);
+    }
     const handleStart = (e) =>{
         firstSquare.current = e.target
     }
@@ -646,6 +683,7 @@ export default function Game(){
 
     const handleEnd = () =>{
         if(!isReady()) return
+        if(moves.current <= 0) return
         if((endSquare.current === null || firstSquare.current === null)) return
         const fId = parseInt(firstSquare.current.id)
         const lId = parseInt(endSquare.current.id)
@@ -658,25 +696,28 @@ export default function Game(){
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(firstSquare.current.name === prevBoard[i].name){
+                        lightningTime(fId, i)
                         newBoard[i] = blank
                         increment(10);
                     }
                 }
-                newBoard[endSquare.current.id] = blank
+                newBoard[lId] = blank
             }
             else if(firstSquare.current.name === "Watermelon" && endSquare.current.name !== "Watermelon" && endSquare.current.name !== "Bomb" && endSquare.current.name !== "Pineapple"){
                 increment(150);
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(endSquare.current.name === prevBoard[i].name){
-                        newBoard[i] = blank
+                        lightningTime(lId, i)
+                        newBoard[i] = blank;
                         increment(10);
                     }
                 }
-                newBoard[firstSquare.current.id] = blank
+                newBoard[fId] = blank
             }
             else if(endSquare.current.name === "Bomb" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple"){
                 increment(100);
+                explosion(fId)
                 moves.current--;
                 if(prevBoard[fId]) {newBoard[fId] = blank; increment(10);};
                 if(prevBoard[fId - 1]) if((fId - 1) % boardLength !== 7){newBoard[fId - 1] = blank; increment(10);};
@@ -691,6 +732,7 @@ export default function Game(){
             }
             else if(firstSquare.current.name === "Bomb" && endSquare.current.name !== "Watermelon" && endSquare.current.name !== "Bomb" && endSquare.current.name !== "Pineapple"){
                 increment(100);
+                explosion(lId)
                 moves.current--;
                 if(prevBoard[lId]) {newBoard[lId] = blank; increment(10);};
                 if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== 7){newBoard[lId - 1] = blank; increment(10);};
@@ -740,6 +782,7 @@ export default function Game(){
             else if(endSquare.current.name === "Bomb" && firstSquare.current.name === "Bomb"){
                 increment(350);
                 moves.current--;
+                explosion2(lId);
                 if(prevBoard[lId]) {newBoard[lId] = blank; increment(10);};
                 if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== 7){newBoard[lId - 1] = blank; increment(10);};
                 if(prevBoard[lId + 1]) if((lId + 1) % boardLength !== 0){newBoard[lId + 1] = blank; increment(10);};
@@ -775,6 +818,7 @@ export default function Game(){
             else if((endSquare.current.name === "Watermelon" && firstSquare.current.name === "Watermelon")){
                 increment(500);
                 for(let i = 0; i < boardLength ** 2; i++){
+                    
                     newBoard[i] = blank
                     increment(10);
                 }
@@ -819,6 +863,7 @@ export default function Game(){
                 }
             }
             else{
+                //lightningTime(fId, lId)
                 swapped.current = true;
                 newBoard[fId] = prevBoard[lId]
                 newBoard[lId] = prevBoard[fId]
@@ -847,6 +892,9 @@ export default function Game(){
                 <div ref = {rotated135Ref} className={styles.rotated135} />
                 <div ref = {rotated225Ref} className={styles.rotated225} />
                 <div ref = {rotated315Ref} className={styles.rotated315} />
+                <div ref = {explosionRef} className={styles.explosion} />
+                <div ref = {explosion2Ref} className={styles.explosion2} />
+                <Image ref = {boltRef} className={styles.bolt} src = {lightning.src} alt = "no" />
                 {board.map((element, index)=>(
                       <Image 
                             ref={el => BoardRef.current[index] = el}
