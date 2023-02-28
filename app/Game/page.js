@@ -585,9 +585,8 @@ export default function Game(){
     React.useEffect(()=>{
         const waitTime = isAnimation.current ? animationDuration : 40;
         const fill  = setTimeout(fillBoard, waitTime);
-        const check  = setTimeout(checkBoard, 10);
+        checkBoard();
         return () => {
-            clearTimeout(check)
             clearTimeout(fill)
         }
         
