@@ -48,5 +48,4 @@ export const pineapple = {
 export const lightning = {
     src: Lightning
 }
-
-export const animationDuration = 195;
+export const animationDuration = 9195;

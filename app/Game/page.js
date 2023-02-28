@@ -33,6 +33,13 @@ export default function Game(){
     //Reference to all elements in the array xd
     const BoardRef = React.useRef(new Array(boardLength ** 2))
 
+    let screenSize = 80;
+    if(typeof window !== 'undefined') screenSize = innerWidth >= 640 ? 80:35;
+    const imageWidth = React.useRef(screenSize)
+
+    //audioRef 
+    //const audioRef = useRef(null);
+
     //Reference to lines
     const horizontalRef = React.useRef(null)
     const verticalRef = React.useRef(null)
@@ -131,7 +138,7 @@ export default function Game(){
                   increment(60);
                   return true
             }
-            else if( i % boardLength < boardLength - 2 && i % 8 > 0 && board[i + 1] && board[i + 2] && board[i - boardLength] && board[i - 2 * boardLength] &&  board[i - 1] &&
+            else if( i % boardLength < boardLength - 2 && i % boardLength > 0 && board[i + 1] && board[i + 2] && board[i - boardLength] && board[i - 2 * boardLength] &&  board[i - 1] &&
                 board[i].name === board[i - 1].name &&
                 board[i].name === board[i + 1].name && 
                 board[i].name === board[i + 2].name && 
@@ -380,7 +387,7 @@ export default function Game(){
     }
     const row5 = ()=>{
         for(let i = 0; i < boardLength ** 2; i++){
-            if(i % 8 === 7 || i % 8 === 6 || i % 8 === 5 || i % 8 === 4) continue;
+            if(i % boardLength === boardLength - 1 || i % boardLength === boardLength - 2 || i % boardLength === boardLength -3 || i % boardLength === boardLength - 4) continue;
             if(board[i].name === board[i + 1].name && 
                 board[i].name === board[i + 2].name && 
                 board[i].name === board[i + 3].name && 
@@ -403,7 +410,7 @@ export default function Game(){
     }
     const row4 = ()=>{
         for(let i = 0; i < boardLength ** 2; i++){
-            if(i % 8 === 7 || i % 8 === 6 || i % 8 === 5) continue;
+            if(i % boardLength === boardLength - 1 || i % boardLength === boardLength - 2 || i % boardLength === boardLength - 3) continue;
             if(board[i].name === board[i + 1].name && 
                 board[i].name === board[i + 2].name && 
                 board[i].name === board[i + 3].name && 
@@ -434,7 +441,7 @@ export default function Game(){
     }
     const row3 = ()=>{
         for(let i = 0; i < boardLength ** 2; i++){
-            if(i % 8 === 7 || i % 8 === 6) continue;
+            if(i % boardLength === boardLength - 1 || i % boardLength === boardLength - 2) continue;
             if(board[i].name === board[i + 1].name && board[i].name === board[i + 2].name && board[i] !== blank && board[i] !== pineapple && board[i] !== bomb && board[i] !== watermelon ){
                 setBoard((prevBoard) => {
                     const newBoard = [...prevBoard];
@@ -553,7 +560,7 @@ export default function Game(){
     const fillBoard = () =>{
         for(let i = boardLength ** 2 - 1; i >= 0 ; i--){
             if(board[i] === blank){
-                if(i <= 7){
+                if(i < boardLength){
                     setBoard((prevBoard) =>{
                         const newBoard = [...prevBoard];
                         newBoard[i] = fruits[Math.floor(Math.random() * fruits.length)]
@@ -563,8 +570,8 @@ export default function Game(){
                     setBoard((prevBoard) => {
                         const newArray = [...prevBoard];
                         const temp = newArray[i];
-                        newArray[i] = newArray[i - 8];
-                        newArray[i - 8] = temp;
+                        newArray[i] = newArray[i - boardLength];
+                        newArray[i - boardLength] = temp;
                         return newArray;
                     })
                 }
@@ -599,7 +606,7 @@ export default function Game(){
     }, [])
 
     React.useEffect(()=>{
-        if(typeof window !== undefined) sessionStorage.setItem("score", score.current)
+        if(typeof window !== 'undefined') sessionStorage.setItem("score", score.current)
     },[score.current])
 
     const makeInvisible = (currentRef) =>{
@@ -607,13 +614,23 @@ export default function Game(){
         if(!currentRef) return
         currentRef.style.visibility = 'hidden';
     }
+    React.useEffect(() => {
+        function handleResize() {
+            if(typeof window !== 'undefined') imageWidth.current = window.innerWidth >= 640 ? 80: 35;
+        }
+        if(typeof window !== 'undefined') window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
     const pineapple1 = (id) =>{
         verticalRef.current.style.visibility = 'visible'
-        verticalRef.current.style.left = `${(id % 8) * 80 + 30}px`
+        verticalRef.current.style.left = `${(id % boardLength) * imageWidth.current + (0.375 * imageWidth.current)}px`
         horizontalRef.current.style.visibility = 'visible'
         isAnimation.current = true;
-        horizontalRef.current.style.top = `${Math.floor(id / 8) * 80 + 30}px`
+        horizontalRef.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.375 * imageWidth.current)}px`
         setTimeout(() => makeInvisible(verticalRef.current), animationDuration);
         setTimeout(() => makeInvisible(horizontalRef.current), animationDuration);
         
@@ -625,16 +642,16 @@ export default function Game(){
         rotated135Ref.current.style.visibility = 'visible'
         rotated225Ref.current.style.visibility = 'visible'
         rotated315Ref.current.style.visibility = 'visible'
-        verticalRef.current.style.left = `${(id % 8) * 80 + 30}px`
-        horizontalRef.current.style.top = `${Math.floor(id / 8) * 80 + 25}px`
-        rotated45Ref.current.style.left = `${(id % 8) * 80 + 32}px`
-        rotated135Ref.current.style.left = `${(id % 8) * 80 + 60}px`
-        rotated225Ref.current.style.left = `${(id % 8) * 80 + 20}px`
-        rotated315Ref.current.style.left = `${(id % 8) * 80 + 50}px`
-        rotated45Ref.current.style.top = `${Math.floor(id / 8) * 80 + 26}px`
-        rotated135Ref.current.style.top = `${Math.floor(id / 8) * 80 + 40}px`
-        rotated225Ref.current.style.top = `${Math.floor(id / 8) * 80 + 40}px`
-        rotated315Ref.current.style.top = `${Math.floor(id / 8) * 80 + 50}px`
+        verticalRef.current.style.left = `${(id % boardLength) * imageWidth.current + (0.375 * imageWidth.current)}px`
+        horizontalRef.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.3125 * imageWidth.current)}px`
+        rotated45Ref.current.style.left = `${(id % boardLength) * imageWidth.current + (0.4 * imageWidth.current)}px`
+        rotated135Ref.current.style.left = `${(id % boardLength) * imageWidth.current + (0.75 * imageWidth.current)}px`
+        rotated225Ref.current.style.left = `${(id % boardLength) * imageWidth.current + (0.25 * imageWidth.current)}px`
+        rotated315Ref.current.style.left = `${(id % boardLength) * imageWidth.current + (0.625 * imageWidth.current)}px`
+        rotated45Ref.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.325 * imageWidth.current)}px`
+        rotated135Ref.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.5 * imageWidth.current)}px`
+        rotated225Ref.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.5 * imageWidth.current)}px`
+        rotated315Ref.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.625 * imageWidth.current)}px`
         isAnimation.current = true;
         setTimeout(() => makeInvisible(verticalRef.current), animationDuration);
         setTimeout(() => makeInvisible(horizontalRef.current), animationDuration);
@@ -647,38 +664,38 @@ export default function Game(){
 
     const explosion = (id) => {
         explosionRef.current.style.visibility = 'visible'
-        explosionRef.current.style.left = `${(id % 8) * 80 + 10 }px`
-        explosionRef.current.style.top = `${Math.floor(id / 8) * 80 + 10}px`
+        explosionRef.current.style.left = `${(id % boardLength) * imageWidth.current + (0.12 * imageWidth.current) }px`
+        explosionRef.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.12 * imageWidth.current) }px`
         isAnimation.current = true;
         setTimeout(() => makeInvisible(explosionRef.current), animationDuration);
 
     }
     const explosion2 = (id) => {
         explosion2Ref.current.style.visibility = 'visible'
-        explosion2Ref.current.style.left = `${(id % 8) * 80 + 10 }px`
-        explosion2Ref.current.style.top = `${Math.floor(id / 8) * 80 + 10}px`
+        explosion2Ref.current.style.left = `${(id % boardLength) * imageWidth.current + (0.12 * imageWidth.current) }px`
+        explosion2Ref.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.12 * imageWidth.current)}px`
         isAnimation.current = true;
         setTimeout(() => makeInvisible(explosion2Ref.current), animationDuration);
     }
     const pineappleExplosion = (id) =>{
         pineappleExplosionVerticalRef.current.style.visibility = 'visible'
-        pineappleExplosionVerticalRef.current.style.left = `${(id % 8) * 80 + 30}px`
+        pineappleExplosionVerticalRef.current.style.left = `${(id % boardLength) * imageWidth.current + (0.37 * imageWidth.current)}px`
         pineappleExplosionHorizontalRef.current.style.visibility = 'visible'
-        pineappleExplosionHorizontalRef.current.style.top = `${Math.floor(id / 8) * 80 + 30}px`
+        pineappleExplosionHorizontalRef.current.style.top = `${Math.floor(id / boardLength) * imageWidth.current + (0.37 * imageWidth.current)}px`
         isAnimation.current = true;
         setTimeout(() => makeInvisible(pineappleExplosionHorizontalRef.current), animationDuration);
         setTimeout(() => makeInvisible(pineappleExplosionVerticalRef.current), animationDuration);
     }
     const lightningTime = (id, endId) => {
         if(!boltsRef.current[endId]) return
-        const x1 = id % 8;
-        const x2 = endId % 8;
-        const y1 = Math.floor(id / 8);
-        const y2 = Math.floor(endId / 8);
+        const x1 = id % boardLength;
+        const x2 = endId % boardLength;
+        const y1 = Math.floor(id / boardLength);
+        const y2 = Math.floor(endId / boardLength);
         boltsRef.current[endId].style.visibility = 'visible'
-        boltsRef.current[endId].style.left = `${x1 * 80 + 40}px`
-        boltsRef.current[endId].style.top = `${y1 * 80 + 40}px`
-        boltsRef.current[endId].style.height = `${Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * 80}px`
+        boltsRef.current[endId].style.left = `${x1 * imageWidth.current + (0.5 * imageWidth.current)}px`
+        boltsRef.current[endId].style.top = `${y1 * imageWidth.current + (0.5 * imageWidth.current)}px`
+        boltsRef.current[endId].style.height = `${Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * imageWidth.current}px`
         const angleRadians = Math.atan2(y2 - y1, x2 - x1);
         const angleDegrees = angleRadians * (180 / Math.PI);
         boltsRef.current[endId].style.transform = `rotate(${angleDegrees - 90}deg)`;
@@ -693,6 +710,7 @@ export default function Game(){
     }
 
     const handleEnd = () =>{
+        console.log(imageWidth.current)
         if(!isReady()) return
         if(moves.current <= 0) return
         if((endSquare.current === null || firstSquare.current === null)) return
@@ -731,13 +749,13 @@ export default function Game(){
                 explosion(fId)
                 moves.current--;
                 if(prevBoard[fId]) {newBoard[fId] = blank; increment(10);};
-                if(prevBoard[fId - 1]) if((fId - 1) % boardLength !== 7){newBoard[fId - 1] = blank; increment(10);};
+                if(prevBoard[fId - 1]) if((fId - 1) % boardLength !== boardLength - 1){newBoard[fId - 1] = blank; increment(10);};
                 if(prevBoard[fId + 1]) if((fId + 1) % boardLength !== 0){newBoard[fId + 1] = blank; increment(10);};
                 if(prevBoard[fId + boardLength]) {newBoard[fId + boardLength] = blank; increment(10);};
                 if(prevBoard[fId - boardLength]) {newBoard[fId - boardLength] = blank; increment(10);};
                 if(prevBoard[fId + boardLength + 1]) if((fId + boardLength + 1) % boardLength !== 0){newBoard[fId + boardLength + 1] = blank; increment(10);};
-                if(prevBoard[fId + boardLength - 1]) if((fId + boardLength - 1) % boardLength !== 7){newBoard[fId + boardLength - 1] = blank; increment(10);};
-                if(prevBoard[fId - boardLength - 1]) if((fId - boardLength - 1) % boardLength !== 7){newBoard[fId - boardLength - 1] = blank; increment(10);};
+                if(prevBoard[fId + boardLength - 1]) if((fId + boardLength - 1) % boardLength !== boardLength - 1){newBoard[fId + boardLength - 1] = blank; increment(10);};
+                if(prevBoard[fId - boardLength - 1]) if((fId - boardLength - 1) % boardLength !== boardLength - 1){newBoard[fId - boardLength - 1] = blank; increment(10);};
                 if(prevBoard[fId - boardLength + 1]) if((fId - boardLength + 1) % boardLength !== 0){newBoard[fId - boardLength + 1] = blank; increment(10);};
                
             }
@@ -746,13 +764,13 @@ export default function Game(){
                 explosion(lId)
                 moves.current--;
                 if(prevBoard[lId]) {newBoard[lId] = blank; increment(10);};
-                if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== 7){newBoard[lId - 1] = blank; increment(10);};
+                if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== boardLength-1 ){newBoard[lId - 1] = blank; increment(10);};
                 if(prevBoard[lId + 1]) if((lId + 1) % boardLength !== 0){newBoard[lId + 1] = blank; increment(10);};
                 if(prevBoard[lId + boardLength]) {newBoard[lId + boardLength] = blank; increment(10);};
                 if(prevBoard[lId - boardLength]) {newBoard[lId - boardLength] = blank; increment(10);};
                 if(prevBoard[lId + boardLength + 1]) if((lId + boardLength + 1) % boardLength !== 0){newBoard[lId + boardLength + 1] = blank; increment(10);};
-                if(prevBoard[lId + boardLength - 1]) if((lId + boardLength - 1) % boardLength !== 7){newBoard[lId + boardLength - 1] = blank; increment(10);};
-                if(prevBoard[lId - boardLength - 1]) if((lId - boardLength - 1) % boardLength !== 7){newBoard[lId - boardLength - 1] = blank; increment(10);};
+                if(prevBoard[lId + boardLength - 1]) if((lId + boardLength - 1) % boardLength !== boardLength - 1){newBoard[lId + boardLength - 1] = blank; increment(10);};
+                if(prevBoard[lId - boardLength - 1]) if((lId - boardLength - 1) % boardLength !== boardLength - 1){newBoard[lId - boardLength - 1] = blank; increment(10);};
                 if(prevBoard[lId - boardLength + 1]) if((lId - boardLength + 1) % boardLength !== 0){newBoard[lId - boardLength + 1] = blank; increment(10);};
                
             }
@@ -761,7 +779,7 @@ export default function Game(){
                 pineapple1(lId)
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
-                    if(i % 8 === lId % 8 || Math.floor(i / 8) === Math.floor(lId / 8)){
+                    if(i % boardLength === lId % boardLength || Math.floor(i / boardLength) === Math.floor(lId / boardLength)){
                         newBoard[i] = blank
                         increment(10);
                     }
@@ -772,7 +790,7 @@ export default function Game(){
                 pineapple1(fId)
                 moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
-                    if(i % 8 === fId % 8 || Math.floor(i / 8) === Math.floor(fId / 8)){
+                    if(i % boardLength === fId % boardLength || Math.floor(i / boardLength) === Math.floor(fId / boardLength)){
                         newBoard[i] = blank
                         increment(10);
                     }
@@ -783,9 +801,9 @@ export default function Game(){
                 moves.current--;
                 pineappleExplosion(lId)
                 for(let i = 0; i < boardLength ** 2; i++){
-                    if((i % 8 === lId % 8 || Math.floor(i / 8) === Math.floor(lId / 8)) || 
-                    (i % 8 === lId % 8 - 1 || Math.floor(i / 8) === Math.floor(lId / 8) - 1) ||
-                    (i % 8 === lId % 8 + 1 || Math.floor(i / 8) === Math.floor(lId / 8) + 1)){
+                    if((i % boardLength === lId % boardLength || Math.floor(i / boardLength) === Math.floor(lId / boardLength)) || 
+                    (i % boardLength === lId % boardLength - 1 || Math.floor(i / boardLength) === Math.floor(lId / boardLength) - 1) ||
+                    (i % boardLength === lId % boardLength + 1 || Math.floor(i / boardLength) === Math.floor(lId / boardLength) + 1)){
                         newBoard[i] = blank
                         increment(10);
                     }
@@ -796,39 +814,40 @@ export default function Game(){
                 moves.current--;
                 explosion2(lId);
                 if(prevBoard[lId]) {newBoard[lId] = blank; increment(10);};
-                if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== 7){newBoard[lId - 1] = blank; increment(10);};
+                if(prevBoard[lId - 1]) if((lId - 1) % boardLength !== boardLength - 1){newBoard[lId - 1] = blank; increment(10);};
                 if(prevBoard[lId + 1]) if((lId + 1) % boardLength !== 0){newBoard[lId + 1] = blank; increment(10);};
                 if(prevBoard[lId + boardLength]) {newBoard[lId + boardLength] = blank; increment(10);};
                 if(prevBoard[lId - boardLength]) {newBoard[lId - boardLength] = blank; increment(10);};
                 if(prevBoard[lId + boardLength + 1]) if((lId + boardLength + 1) % boardLength !== 0){newBoard[lId + boardLength + 1] = blank; increment(10);};
-                if(prevBoard[lId + boardLength - 1]) if((lId + boardLength - 1) % boardLength !== 7){newBoard[lId + boardLength - 1] = blank; increment(10);};
-                if(prevBoard[lId - boardLength - 1]) if((lId - boardLength - 1) % boardLength !== 7){newBoard[lId - boardLength - 1] = blank; increment(10);};
+                if(prevBoard[lId + boardLength - 1]) if((lId + boardLength - 1) % boardLength !== boardLength - 1){newBoard[lId + boardLength - 1] = blank; increment(10);};
+                if(prevBoard[lId - boardLength - 1]) if((lId - boardLength - 1) % boardLength !== boardLength - 1){newBoard[lId - boardLength - 1] = blank; increment(10);};
                 if(prevBoard[lId - boardLength + 1]) if((lId - boardLength + 1) % boardLength !== 0){newBoard[lId - boardLength + 1] = blank; increment(10);};
 
-                if(prevBoard[lId - 2]) if((lId - 2) % boardLength !== 7 && (lId - 2) % boardLength !== 6) {newBoard[lId - 2] = blank; increment(10);};
+                if(prevBoard[lId - 2]) if((lId - 2) % boardLength !== boardLength - 1 && (lId - 2) % boardLength !== 6) {newBoard[lId - 2] = blank; increment(10);};
                 if(prevBoard[lId + 2]) if((lId + 2) % boardLength !== 0 && (lId + 2) % boardLength !== 1){newBoard[lId + 2] = blank; increment(10);};
 
                 if(prevBoard[lId + 2 * boardLength]) {newBoard[lId + 2 * boardLength] = blank; increment(10);};
                 if(prevBoard[lId - 2 * boardLength]) {newBoard[lId - 2 * boardLength] = blank; increment(10);};
 
                 if(prevBoard[lId + boardLength + 2]) if((lId + boardLength + 2) % boardLength !== 0 && (lId + boardLength + 2) % boardLength !== 1){newBoard[lId + boardLength + 2] = blank; increment(10);};
-                if(prevBoard[lId + boardLength - 2]) if((lId + boardLength - 2) % boardLength !== 7 && (lId + boardLength - 2) % boardLength !== 6){newBoard[lId + boardLength - 2] = blank; increment(10);};
-                if(prevBoard[lId - boardLength - 2]) if((lId - boardLength - 2) % boardLength !== 7 && (lId - boardLength - 2) % boardLength !== 6){newBoard[lId - boardLength - 2] = blank; increment(10);};
+                if(prevBoard[lId + boardLength - 2]) if((lId + boardLength - 2) % boardLength !== boardLength - 1 && (lId + boardLength - 2) % boardLength !== 6){newBoard[lId + boardLength - 2] = blank; increment(10);};
+                if(prevBoard[lId - boardLength - 2]) if((lId - boardLength - 2) % boardLength !== boardLength - 1 && (lId - boardLength - 2) % boardLength !== 6){newBoard[lId - boardLength - 2] = blank; increment(10);};
                 if(prevBoard[lId - boardLength + 2]) if((lId - boardLength + 2) % boardLength !== 0 && (lId - boardLength + 2) % boardLength !== 1){newBoard[lId - boardLength + 2] = blank; increment(10);};
 
                 if(prevBoard[lId + 2 * boardLength + 1]) if((lId + 2 * boardLength + 1) % boardLength !== 0){newBoard[lId + 2 * boardLength + 1] = blank; increment(10);};
-                if(prevBoard[lId + 2 * boardLength - 1]) if((lId + 2 * boardLength - 1) % boardLength !== 7){newBoard[lId + 2 * boardLength - 1] = blank; increment(10);};
-                if(prevBoard[lId - 2 * boardLength - 1]) if((lId - 2 * boardLength - 1) % boardLength !== 7){newBoard[lId - 2 * boardLength - 1] = blank; increment(10);};
+                if(prevBoard[lId + 2 * boardLength - 1]) if((lId + 2 * boardLength - 1) % boardLength !== boardLength - 1){newBoard[lId + 2 * boardLength - 1] = blank; increment(10);};
+                if(prevBoard[lId - 2 * boardLength - 1]) if((lId - 2 * boardLength - 1) % boardLength !== boardLength - 1){newBoard[lId - 2 * boardLength - 1] = blank; increment(10);};
                 if(prevBoard[lId - 2 * boardLength + 1]) if((lId - 2 * boardLength + 1) % boardLength !== 0){newBoard[lId - 2 * boardLength + 1] = blank; increment(10);};
 
                 if(prevBoard[lId + 2 * boardLength + 2]) if((lId + 2 * boardLength + 2) % boardLength !== 0 && (lId + 2 * boardLength + 2) % boardLength !== 1) {newBoard[lId + 2 * boardLength + 2] = blank; increment(10);};
-                if(prevBoard[lId + 2 * boardLength - 2]) if((lId + 2 * boardLength - 2) % boardLength !== 7 && (lId + 2 * boardLength - 2) % boardLength !== 6) {newBoard[lId + 2 * boardLength - 2] = blank; increment(10);};
-                if(prevBoard[lId - 2 * boardLength - 2]) if((lId - 2 * boardLength - 2) % boardLength !== 7 && (lId - 2 * boardLength - 2) % boardLength !== 6) {newBoard[lId - 2 * boardLength - 2] = blank; increment(10);};
+                if(prevBoard[lId + 2 * boardLength - 2]) if((lId + 2 * boardLength - 2) % boardLength !== boardLength - 1 && (lId + 2 * boardLength - 2) % boardLength !== 6) {newBoard[lId + 2 * boardLength - 2] = blank; increment(10);};
+                if(prevBoard[lId - 2 * boardLength - 2]) if((lId - 2 * boardLength - 2) % boardLength !== boardLength - 1 && (lId - 2 * boardLength - 2) % boardLength !== 6) {newBoard[lId - 2 * boardLength - 2] = blank; increment(10);};
                 if(prevBoard[lId - 2 * boardLength + 2]) if((lId - 2 * boardLength + 2) % boardLength !== 0 && (lId - 2 * boardLength + 2) % boardLength !== 1) {newBoard[lId - 2 * boardLength + 2] = blank; increment(10);};
 
             }
             else if((endSquare.current.name === "Watermelon" && firstSquare.current.name === "Watermelon")){
                 increment(500);
+                moves.current--;
                 for(let i = 0; i < boardLength ** 2; i++){
                     lightningTime(lId, i)
                     newBoard[i] = blank
@@ -868,9 +887,9 @@ export default function Game(){
                 moves.current--;
                 pineapple2(lId)
                 for(let i = 0; i < boardLength ** 2; i++){
-                    const temp1 = i % 8;
-                    const temp2 = Math.floor(i / 8)
-                    if((temp1 === lId % 8 || temp2 === Math.floor(lId / 8)) || (Math.abs(temp1 - lId % 8) === Math.abs(temp2 - Math.floor(lId / 8)))){
+                    const temp1 = i % boardLength;
+                    const temp2 = Math.floor(i / boardLength)
+                    if((temp1 === lId % boardLength || temp2 === Math.floor(lId / boardLength)) || (Math.abs(temp1 - lId % boardLength) === Math.abs(temp2 - Math.floor(lId / boardLength)))){
                         newBoard[i] = blank
                         increment(10);
                     }
@@ -920,6 +939,7 @@ export default function Game(){
                 {board.map((element, index)=>(
                       
                     <Image 
+                        className={styles.fruit}
                         ref={el => BoardRef.current[index] = el}
                         draggable = {true}
                         onDragStart = {handleStart}
