@@ -42,8 +42,9 @@ export default function Game(){
     const rotated315Ref = React.useRef(null)
     const explosionRef = React.useRef(null)
     const explosion2Ref = React.useRef(null)
-    const boltRef = React.useRef(null)
-
+    const pineappleExplosionHorizontalRef = React.useRef(null)
+    const pineappleExplosionVerticalRef = React.useRef(null)
+    //bolts for watermelon
     const boltsRef = React.useRef(new Array(boardLength ** 2))
     //animation going on
     let isAnimation = useRef(false);
@@ -575,7 +576,7 @@ export default function Game(){
     }, [])
     //make the moves slower
     React.useEffect(()=>{
-        const waitTime = isAnimation.current ? animationDuration : 50;
+        const waitTime = isAnimation.current ? animationDuration : 40;
         const fill  = setTimeout(fillBoard, waitTime);
         const check  = setTimeout(checkBoard, 10);
         return () => {
@@ -590,7 +591,7 @@ export default function Game(){
         const clicker = () =>{
             if(linkRef.current) linkRef.current.click();
         }
-        setTimeout(clicker, 1600);
+        setTimeout(clicker, 600);
         return () => clearTimeout(clicker)
     })
     React.useEffect(()=>{
@@ -602,8 +603,9 @@ export default function Game(){
     },[score.current])
 
     const makeInvisible = (currentRef) =>{
-        currentRef.current.style.visibility = 'hidden';
         isAnimation.current = false;
+        if(!currentRef) return
+        currentRef.style.visibility = 'hidden';
     }
 
     const pineapple1 = (id) =>{
@@ -612,8 +614,8 @@ export default function Game(){
         horizontalRef.current.style.visibility = 'visible'
         isAnimation.current = true;
         horizontalRef.current.style.top = `${Math.floor(id / 8) * 80 + 30}px`
-        setTimeout(() => makeInvisible(verticalRef), animationDuration);
-        setTimeout(() => makeInvisible(horizontalRef), animationDuration);
+        setTimeout(() => makeInvisible(verticalRef.current), animationDuration);
+        setTimeout(() => makeInvisible(horizontalRef.current), animationDuration);
         
     }
     const pineapple2 = (id) =>{
@@ -634,13 +636,13 @@ export default function Game(){
         rotated225Ref.current.style.top = `${Math.floor(id / 8) * 80 + 40}px`
         rotated315Ref.current.style.top = `${Math.floor(id / 8) * 80 + 50}px`
         isAnimation.current = true;
-        setTimeout(() => makeInvisible(verticalRef), animationDuration);
-        setTimeout(() => makeInvisible(horizontalRef), animationDuration);
-        setTimeout(() => makeInvisible(rotated45Ref), animationDuration);
-        setTimeout(() => makeInvisible(rotated135Ref), animationDuration);
-        setTimeout(() => makeInvisible(rotated225Ref), animationDuration);
-        setTimeout(() => makeInvisible(rotated315Ref), animationDuration);
-        setTimeout(() => makeInvisible(rotated315Ref), animationDuration);
+        setTimeout(() => makeInvisible(verticalRef.current), animationDuration);
+        setTimeout(() => makeInvisible(horizontalRef.current), animationDuration);
+        setTimeout(() => makeInvisible(rotated45Ref.current), animationDuration);
+        setTimeout(() => makeInvisible(rotated135Ref.current), animationDuration);
+        setTimeout(() => makeInvisible(rotated225Ref.current), animationDuration);
+        setTimeout(() => makeInvisible(rotated315Ref.current), animationDuration);
+        setTimeout(() => makeInvisible(rotated315Ref.current), animationDuration);
     }
 
     const explosion = (id) => {
@@ -648,7 +650,7 @@ export default function Game(){
         explosionRef.current.style.left = `${(id % 8) * 80 + 10 }px`
         explosionRef.current.style.top = `${Math.floor(id / 8) * 80 + 10}px`
         isAnimation.current = true;
-        setTimeout(() => makeInvisible(explosionRef), animationDuration);
+        setTimeout(() => makeInvisible(explosionRef.current), animationDuration);
 
     }
     const explosion2 = (id) => {
@@ -656,23 +658,32 @@ export default function Game(){
         explosion2Ref.current.style.left = `${(id % 8) * 80 + 10 }px`
         explosion2Ref.current.style.top = `${Math.floor(id / 8) * 80 + 10}px`
         isAnimation.current = true;
-        setTimeout(() => makeInvisible(explosion2Ref), animationDuration);
+        setTimeout(() => makeInvisible(explosion2Ref.current), animationDuration);
+    }
+    const pineappleExplosion = (id) =>{
+        pineappleExplosionVerticalRef.current.style.visibility = 'visible'
+        pineappleExplosionVerticalRef.current.style.left = `${(id % 8) * 80 + 30}px`
+        pineappleExplosionHorizontalRef.current.style.visibility = 'visible'
+        pineappleExplosionHorizontalRef.current.style.top = `${Math.floor(id / 8) * 80 + 30}px`
+        isAnimation.current = true;
+        setTimeout(() => makeInvisible(pineappleExplosionHorizontalRef.current), animationDuration);
+        setTimeout(() => makeInvisible(pineappleExplosionVerticalRef.current), animationDuration);
     }
     const lightningTime = (id, endId) => {
+        if(!boltsRef.current[endId]) return
         const x1 = id % 8;
         const x2 = endId % 8;
         const y1 = Math.floor(id / 8);
         const y2 = Math.floor(endId / 8);
-        boltRef.current.style.visibility = 'visible'
-        boltRef.current.style.left = `${x1 * 80 + 40}px`
-        boltRef.current.style.top = `${y1 * 80 + 40}px`
-        boltRef.current.style.height = `${Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * 80}px`
+        boltsRef.current[endId].style.visibility = 'visible'
+        boltsRef.current[endId].style.left = `${x1 * 80 + 40}px`
+        boltsRef.current[endId].style.top = `${y1 * 80 + 40}px`
+        boltsRef.current[endId].style.height = `${Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * 80}px`
         const angleRadians = Math.atan2(y2 - y1, x2 - x1);
         const angleDegrees = angleRadians * (180 / Math.PI);
-        boltRef.current.style.transform = `rotate(${angleDegrees - 90}deg)`;
-        console.log(`${x1 * 80 + 35}px`)
+        boltsRef.current[endId].style.transform = `rotate(${angleDegrees - 90}deg)`;
         isAnimation.current = true;
-        setTimeout(() => makeInvisible(boltRef), animationDuration);
+        setTimeout(() => makeInvisible(boltsRef.current[endId]), animationDuration);
     }
     const handleStart = (e) =>{
         firstSquare.current = e.target
@@ -770,6 +781,7 @@ export default function Game(){
             else if((endSquare.current.name === "Pineapple" && firstSquare.current.name === "Bomb") || (firstSquare.current.name === "Pineapple" && endSquare.current.name === "Bomb")){
                 increment(250);
                 moves.current--;
+                pineappleExplosion(lId)
                 for(let i = 0; i < boardLength ** 2; i++){
                     if((i % 8 === lId % 8 || Math.floor(i / 8) === Math.floor(lId / 8)) || 
                     (i % 8 === lId % 8 - 1 || Math.floor(i / 8) === Math.floor(lId / 8) - 1) ||
@@ -818,7 +830,7 @@ export default function Game(){
             else if((endSquare.current.name === "Watermelon" && firstSquare.current.name === "Watermelon")){
                 increment(500);
                 for(let i = 0; i < boardLength ** 2; i++){
-                    
+                    lightningTime(lId, i)
                     newBoard[i] = blank
                     increment(10);
                 }
@@ -829,6 +841,7 @@ export default function Game(){
                 const temp = fruits[Math.floor(Math.random() * fruits.length)]
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(prevBoard[i] === temp ){
+                        lightningTime(lId, i)
                         newBoard[i] = pineapple
                         increment(10);
                     }
@@ -842,6 +855,7 @@ export default function Game(){
                 const temp = fruits[Math.floor(Math.random() * fruits.length)]
                 for(let i = 0; i < boardLength ** 2; i++){
                     if(prevBoard[i] === temp ){
+                        lightningTime(lId, i)
                         newBoard[i] = bomb
                         increment(10);
                     }
@@ -863,7 +877,6 @@ export default function Game(){
                 }
             }
             else{
-                //lightningTime(fId, lId)
                 swapped.current = true;
                 newBoard[fId] = prevBoard[lId]
                 newBoard[lId] = prevBoard[fId]
@@ -872,7 +885,6 @@ export default function Game(){
 
         })
     }
-
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
@@ -894,25 +906,34 @@ export default function Game(){
                 <div ref = {rotated315Ref} className={styles.rotated315} />
                 <div ref = {explosionRef} className={styles.explosion} />
                 <div ref = {explosion2Ref} className={styles.explosion2} />
-                <Image ref = {boltRef} className={styles.bolt} src = {lightning.src} alt = "no" />
+                <div ref = {pineappleExplosionHorizontalRef } className={styles.pineappleExplosionHorizontal} />
+                <div ref = {pineappleExplosionVerticalRef} className={styles.pineappleExplosionVertical} />
                 {board.map((element, index)=>(
                       <Image 
-                            ref={el => BoardRef.current[index] = el}
-                            draggable = {true}
-                            onDragStart = {handleStart}
-                            onDragEnd = {handleEnd}
-                            onDragOver = {(e) => e.preventDefault()}
-                            onDragEnter = {(e) => e.preventDefault()}
-                            onDragLeave = {(e) => e.preventDefault()}
-                            onDrop = {handleDrop}
-                            src = {element.src} 
+                            ref={el => boltsRef.current[index] = el}
+                            className={styles.bolt}
+                            src = {lightning.src} 
                             key = {index} 
                             id = {index}
-                            name = {element.name}  
                             alt="no"/>
-                            
-                ))
-                }
+                ))}
+                {board.map((element, index)=>(
+                      
+                    <Image 
+                        ref={el => BoardRef.current[index] = el}
+                        draggable = {true}
+                        onDragStart = {handleStart}
+                        onDragEnd = {handleEnd}
+                        onDragOver = {(e) => e.preventDefault()}
+                        onDragEnter = {(e) => e.preventDefault()}
+                        onDragLeave = {(e) => e.preventDefault()}
+                        onDrop = {handleDrop}
+                        src = {element.src} 
+                        key = {index} 
+                        id = {index}
+                        name = {element.name}  
+                        alt="no"/>   
+                ))}
             </div>
         </div>
     )

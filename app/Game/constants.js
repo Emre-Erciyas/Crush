@@ -49,4 +49,4 @@ export const lightning = {
     src: Lightning
 }
 
-export const animationDuration = 2210;
+export const animationDuration = 195;
