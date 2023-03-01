@@ -10,7 +10,7 @@
     flex-wrap: wrap;
     overflow: hidden;
     box-sizing: content-box;
-    border:5px solid black;
+    border:5px solid #38204F;
 
 }
 .fruit{
@@ -19,7 +19,7 @@
 }
 .container{
     height: 100vh;
-    background-color: #7E25D9;
+    background-color: #D64DCF;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -37,6 +37,7 @@
     display: flex;
     align-items:flex-end;
     margin: 0 10px;
+    color: #38204F;
 }
 
 .quit{
@@ -44,8 +45,8 @@
     right: 24px;
     text-decoration: none;
     font-size: 1.8rem;
-    color: black;
-    background-color: brown;
+    color: #38204F;
+    background-color: #B984F8;
     border-radius: 3px;
     font-weight: 700;
     display: flex;

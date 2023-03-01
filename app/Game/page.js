@@ -603,7 +603,6 @@ export default function Game(){
     React.useEffect(()=>{
         score.current = 0;
         if(typeof window !== 'undefined') {
-            console.log("innerWidth: ", imageWidth.current)
             if(innerWidth >= 656) imageWidth.current = 80;
             else if(innerWidth >= 496) imageWidth.current = 60; 
             else imageWidth.current = 40
@@ -719,7 +718,6 @@ export default function Game(){
     }
 
     const handleEnd = () =>{
-        console.log(imageWidth.current)
         setIsClicked(false)
         if(!isReady()) return
         if(moves.current <= 0) return
@@ -925,7 +923,6 @@ export default function Game(){
             handleEnd()
         }
     }
-    console.log(isClicked)
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
@@ -959,7 +956,7 @@ export default function Game(){
                             alt="no"/>
                 ))}
                 {board.map((element, index)=>(
-                    <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.id) )? {backgroundColor: 'rgba(35,35,35,0.6)'}:{backgroundColor: 'rgba(50,50,50, 0.6)'} ):{backgroundColor: 'rgba(50,50,50, 0.6)'}} className={styles.fruitHolder}>
+                    <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.id) )? {backgroundColor: 'rgba(25,25,25,0.7)'}:{backgroundColor: 'rgba(50,50,50, 0.7)'} ):{backgroundColor: 'rgba(50,50,50, 0.7)'}} className={styles.fruitHolder}>
                         <Image 
                             className={styles.fruit}
                             ref={el => BoardRef.current[index] = el}
