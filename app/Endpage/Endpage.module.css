@@ -1,5 +1,51 @@
 .main{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #D64DCF;
+    font-size: 1.7rem;
+}
+
+.button{
+    color: #38204F;;
+    background-color: #CC69F0;
+    text-decoration: none;
+    width: 280px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 160px;
+    border: 4px solid #38204F;
+    font-size: 1.7rem;
+}
+
+.score{
+    position: absolute;
+    top: 50px;
+    color: #38204F;
+}
+
+.buttons{
+    width: 80%;
+    height: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #38204F;
+}
+@media (max-width: 656px){
+    .buttons{
+        flex-direction: column;
+        
+    }
+    .button{
+        width: 200px;
+        height: 80px;
+    }
 }
