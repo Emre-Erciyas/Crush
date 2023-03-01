@@ -1,6 +1,6 @@
 "use client"
 import styles from "./Game.module.css"
-import React, { useRef } from "react"
+import React from "react"
 import { boardLength, fruits, blank, watermelon, bomb, pineapple, animationDuration, lightning } from "./constants"
 import Image from "next/image"
 import "../globals.css"
@@ -10,8 +10,9 @@ export default function Game(){
 
     //Current Board of the game.
     const [board, setBoard] = React.useState([])
-
-    //Save squares without re-render.
+    //isClicked
+    const [isClicked, setIsClicked] = React.useState(false)
+    //Save the squares that are chosen by the player without re-render.
     const firstSquare = React.useRef(null);
     const endSquare = React.useRef(null);
 
@@ -33,9 +34,7 @@ export default function Game(){
     //Reference to all elements in the array xd
     const BoardRef = React.useRef(new Array(boardLength ** 2))
 
-    let screenSize = 80;
-    if(typeof window !== 'undefined') screenSize = innerWidth >= 640 ? 80:40;
-    const imageWidth = React.useRef(screenSize)
+    const imageWidth = React.useRef(0)
 
     //audioRef 
     //const audioRef = useRef(null);
@@ -54,7 +53,8 @@ export default function Game(){
     //bolts for watermelon
     const boltsRef = React.useRef(new Array(boardLength ** 2))
     //animation going on
-    let isAnimation = useRef(false);
+    const isAnimation = React.useRef(false);
+
     
     //This Function creates the board when the game starts. It is used in useEffect and only runs once.
     const createBoard = () =>{
@@ -602,6 +602,12 @@ export default function Game(){
     })
     React.useEffect(()=>{
         score.current = 0;
+        if(typeof window !== 'undefined') {
+            console.log("innerWidth: ", imageWidth.current)
+            if(innerWidth >= 656) imageWidth.current = 80;
+            else if(innerWidth >= 496) imageWidth.current = 60; 
+            else imageWidth.current = 40
+        }
     }, [])
 
     React.useEffect(()=>{
@@ -615,7 +621,11 @@ export default function Game(){
     }
     React.useEffect(() => {
         function handleResize() {
-            if(typeof window !== 'undefined') imageWidth.current = window.innerWidth >= 640 ? 80: 40;
+            if(typeof window !== 'undefined') {
+                if(innerWidth >= 656) imageWidth.current = 80;
+                else if(innerWidth >= 496) imageWidth.current = 60 
+                else imageWidth.current = 40
+            }
         }
         if(typeof window !== 'undefined') window.addEventListener('resize', handleResize);
     
@@ -710,6 +720,7 @@ export default function Game(){
 
     const handleEnd = () =>{
         console.log(imageWidth.current)
+        setIsClicked(false)
         if(!isReady()) return
         if(moves.current <= 0) return
         if((endSquare.current === null || firstSquare.current === null)) return
@@ -903,6 +914,18 @@ export default function Game(){
 
         })
     }
+
+    const clickHandler = (e) => {
+        if(!isClicked){ 
+            firstSquare.current = e.target
+            setIsClicked(prev => !prev)
+        }
+        else{
+            endSquare.current = e.target
+            handleEnd()
+        }
+    }
+    console.log(isClicked)
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
@@ -936,22 +959,23 @@ export default function Game(){
                             alt="no"/>
                 ))}
                 {board.map((element, index)=>(
-                      
-                    <Image 
-                        className={styles.fruit}
-                        ref={el => BoardRef.current[index] = el}
-                        draggable = {true}
-                        onDragStart = {handleStart}
-                        onDragEnd = {handleEnd}
-                        onDragOver = {(e) => e.preventDefault()}
-                        onDragEnter = {(e) => e.preventDefault()}
-                        onDragLeave = {(e) => e.preventDefault()}
-                        onDrop = {handleDrop}
-                        src = {element.src} 
-                        key = {index} 
-                        id = {index}
-                        name = {element.name}  
-                        alt="no"/>   
+                    <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.id) )? {backgroundColor: 'rgb(0,0,0)'}:{backgroundColor: 'rgba(250,250,250, 0.6)'} ):{backgroundColor: 'rgba(50,50,50, 0.6)'}} className={styles.fruitHolder}>
+                        <Image 
+                            className={styles.fruit}
+                            ref={el => BoardRef.current[index] = el}
+                            draggable = {true}
+                            onDragStart = {handleStart}
+                            onDragEnd = {handleEnd}
+                            onDragOver = {(e) => e.preventDefault()}
+                            onDragEnter = {(e) => e.preventDefault()}
+                            onDragLeave = {(e) => e.preventDefault()}
+                            onDrop = {handleDrop}
+                            onClick = {clickHandler}
+                            src = {element.src}  
+                            id = {index}
+                            name = {element.name}  
+                            alt="no"/>
+                    </div>   
                 ))}
             </div>
         </div>
