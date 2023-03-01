@@ -959,7 +959,7 @@ export default function Game(){
                             alt="no"/>
                 ))}
                 {board.map((element, index)=>(
-                    <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.id) )? {backgroundColor: 'rgb(0,0,0)'}:{backgroundColor: 'rgba(250,250,250, 0.6)'} ):{backgroundColor: 'rgba(50,50,50, 0.6)'}} className={styles.fruitHolder}>
+                    <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.id) )? {backgroundColor: 'rgba(35,35,35,0.6)'}:{backgroundColor: 'rgba(50,50,50, 0.6)'} ):{backgroundColor: 'rgba(50,50,50, 0.6)'}} className={styles.fruitHolder}>
                         <Image 
                             className={styles.fruit}
                             ref={el => BoardRef.current[index] = el}
