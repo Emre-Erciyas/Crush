@@ -953,7 +953,7 @@ export default function Game(){
                             src = {lightning.src} 
                             key = {index} 
                             id = {index}
-                            alt="no"/>
+                            alt={"Lightning"}/>
                 ))}
                 {board.map((element, index)=>(
                     <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.id) )? {backgroundColor: 'rgba(180,180,180,0.7)'}:{backgroundColor: 'rgba(60,60,60, 0.7)'} ):{backgroundColor: 'rgba(180,180,180, 0.7)'}} className={styles.fruitHolder}>
@@ -971,7 +971,7 @@ export default function Game(){
                             src = {element.src}  
                             id = {index}
                             name = {element.name}  
-                            alt="no"/>
+                            alt= {element.name} />
                     </div>   
                 ))}
             </div>
