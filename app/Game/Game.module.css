@@ -215,12 +215,12 @@
         font-size: 1.1rem;
     }
     .game{
-        height:280px;
-        width:280px;
+        height:320px;
+        width:320px;
     }
     .fruit{
-        height: 35px;
-        width: 35px;
+        height: 40px;
+        width: 40px;
     }
     .vertical, .rotated45, .rotated135, .rotated225, .rotated315{
         width:10px;

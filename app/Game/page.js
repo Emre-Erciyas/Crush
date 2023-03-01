@@ -34,7 +34,7 @@ export default function Game(){
     const BoardRef = React.useRef(new Array(boardLength ** 2))
 
     let screenSize = 80;
-    if(typeof window !== 'undefined') screenSize = innerWidth >= 640 ? 80:35;
+    if(typeof window !== 'undefined') screenSize = innerWidth >= 640 ? 80:40;
     const imageWidth = React.useRef(screenSize)
 
     //audioRef 
@@ -615,7 +615,7 @@ export default function Game(){
     }
     React.useEffect(() => {
         function handleResize() {
-            if(typeof window !== 'undefined') imageWidth.current = window.innerWidth >= 640 ? 80: 35;
+            if(typeof window !== 'undefined') imageWidth.current = window.innerWidth >= 640 ? 80: 40;
         }
         if(typeof window !== 'undefined') window.addEventListener('resize', handleResize);
     
