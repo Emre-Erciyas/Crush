@@ -54,6 +54,21 @@
     margin: 0 10px;
     padding: 4px 24px;
 }
+.refresh{
+    border: none;
+    position: absolute;
+    right: 144px;
+    text-decoration: none;
+    font-size: 1.8rem;
+    color: #38204F;
+    background-color: #B984F8;
+    border-radius: 3px;
+    font-weight: 700;
+    display: flex;
+    align-items:flex-end;
+    margin: 0 10px;
+    padding: 4px 24px;
+}
 
 .navbar{
     width: 100%;
@@ -227,13 +242,19 @@
     align-items: center;
 }
 
-@media (max-width: 656px){
-    .score, .quit{
-        font-size: 1.3rem;
+@media (max-width: 656px),(max-height: 656px){
+    .score, .quit, .refresh{
+        font-size: 1.2rem;
     }
     .game{
         height:480px;
         width:480px;
+    }
+    .refresh{
+        right: 120px
+    }
+    .quit{
+        right: 16px;
     }
     .fruit{
         height: 58px;
@@ -298,9 +319,21 @@
         height: 60px;
     }
 }
-@media (max-width: 496px){
-    .score, .quit{
-        font-size: 1.1rem;
+@media (max-width: 496px),(max-height: 496px){
+    .score, .quit, .refresh{
+        font-size: 0.8rem;
+    }
+    .quit{
+        right: 0;
+    }
+    .refresh{
+        right: 88px;
+    }
+    .left{
+        padding: 4px;
+    }
+    .navbar{
+        padding: 8px 0px ;
     }
     .game{
         height:320px;

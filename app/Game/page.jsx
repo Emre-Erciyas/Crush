@@ -30,7 +30,7 @@ export default function Game(){
 
     //Ref to Link component
     const linkRef = React.useRef(null)
-
+    const refreshRef = React.useRef(null)
     //Reference to all elements in the array xd
     const BoardRef = React.useRef(new Array(boardLength ** 2))
 
@@ -583,7 +583,7 @@ export default function Game(){
     }, [])
     //make the moves slower
     React.useEffect(()=>{
-        const waitTime = isAnimation.current ? animationDuration : 40;
+        const waitTime = isAnimation.current ? animationDuration : 30;
         const fill  = setTimeout(fillBoard, waitTime);
         checkBoard();
         return () => {
@@ -932,6 +932,7 @@ export default function Game(){
                     
                 </div>
                 <div>
+                    <button className={styles.refresh}>Refresh</button>
                     <Link href='/Endpage' ref={linkRef} className={styles.quit}>Quit</Link>
                 </div>
             </nav>
