@@ -7,7 +7,7 @@ import "../globals.css"
 import Link from "next/link"
 
 export default function Game(){
-
+    
     //Current Board of the game.
     const [board, setBoard] = React.useState([])
     //isClicked
@@ -718,9 +718,6 @@ export default function Game(){
     }
 
     const handleEnd = () =>{
-        console.log(firstSquare.current)
-        console.log(firstSquare.current.getAttribute('data-gameid'))
-        console.log(firstSquare.current.draggable)
         setIsClicked(false)
         if(!isReady()) return
         if(moves.current <= 0) return
@@ -728,7 +725,7 @@ export default function Game(){
         const fId = parseInt(firstSquare.current.getAttribute('data-gameid'))
         const lId = parseInt(endSquare.current.getAttribute('data-gameid'))
         const isNeighbour = Math.abs(lId - fId);
-        //if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
+        if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
         setBoard(prevBoard => {
             const newBoard = [...prevBoard];
             if(endSquare.current.name === "Watermelon" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple" ){
@@ -926,6 +923,9 @@ export default function Game(){
             handleEnd()
         }
     }
+    const reset = () => {
+        if(typeof window !== 'undefined') window.location.reload();
+    }
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
@@ -935,7 +935,7 @@ export default function Game(){
                     
                 </div>
                 <div>
-                    <button className={styles.refresh}>Refresh</button>
+                    <button onClick={reset} className={styles.refresh}>Refresh</button>
                     <Link href='/Endpage' ref={linkRef} className={styles.quit}>Quit</Link>
                 </div>
             </nav>

@@ -55,6 +55,7 @@
     padding: 4px 24px;
 }
 .refresh{
+    font-family: "Times New Roman", Times, serif;
     border: none;
     position: absolute;
     right: 144px;
@@ -68,6 +69,10 @@
     align-items:flex-end;
     margin: 0 10px;
     padding: 4px 24px;
+}
+
+.refresh:hover{
+    cursor: pointer;
 }
 
 .navbar{
