@@ -425,10 +425,10 @@ export default function Game(){
                         newBoard[i] = pineapple;
                     }
                     else{
-                        if(parseInt(firstSquare.current.id) === i || parseInt(endSquare.current.id) === i ) newBoard[i] = pineapple;
-                        else if(parseInt(firstSquare.current.id) === i + 1 || parseInt(endSquare.current.id) === i + 1) newBoard[i + 1] = pineapple;
-                        else if(parseInt(firstSquare.current.id) === i + 2 || parseInt(endSquare.current.id) === i + 2) newBoard[i + 2] = pineapple;
-                        else if(parseInt(firstSquare.current.id) === i + 3 || parseInt(endSquare.current.id) === i + 3) newBoard[i + 3] = pineapple;
+                        if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i || parseInt(endSquare.current.getAttribute('data-gameid')) === i ) newBoard[i] = pineapple;
+                        else if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i + 1 || parseInt(endSquare.current.getAttribute('data-gameid')) === i + 1) newBoard[i + 1] = pineapple;
+                        else if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i + 2 || parseInt(endSquare.current.getAttribute('data-gameid')) === i + 2) newBoard[i + 2] = pineapple;
+                        else if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i + 3 || parseInt(endSquare.current.getAttribute('data-gameid')) === i + 3) newBoard[i + 3] = pineapple;
                         else newBoard[i] = pineapple;
                     }
                     return newBoard;
@@ -490,10 +490,10 @@ export default function Game(){
                         newBoard[i] = pineapple;
                     }
                     else{
-                        if(parseInt(firstSquare.current.id) === i || parseInt(endSquare.current.id) === i ) newBoard[i] = pineapple;
-                        else if(parseInt(firstSquare.current.id) === i + boardLength || parseInt(endSquare.current.id) === i + boardLength) newBoard[i + boardLength] = pineapple;
-                        else if(parseInt(firstSquare.current.id) === i + (2 * boardLength) || parseInt(endSquare.current.id) === i + (2 * boardLength)) newBoard[i + (2 * boardLength)] = pineapple;
-                        else if(parseInt(firstSquare.current.id) === i + (3 * boardLength) || parseInt(endSquare.current.id) === i + (3 * boardLength)) newBoard[i + (3 * boardLength)] = pineapple;
+                        if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i || parseInt(endSquare.current.getAttribute('data-gameid')) === i ) newBoard[i] = pineapple;
+                        else if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i + boardLength || parseInt(endSquare.current.getAttribute('data-gameid')) === i + boardLength) newBoard[i + boardLength] = pineapple;
+                        else if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i + (2 * boardLength) || parseInt(endSquare.current.getAttribute('data-gameid')) === i + (2 * boardLength)) newBoard[i + (2 * boardLength)] = pineapple;
+                        else if(parseInt(firstSquare.current.getAttribute('data-gameid')) === i + (3 * boardLength) || parseInt(endSquare.current.getAttribute('data-gameid')) === i + (3 * boardLength)) newBoard[i + (3 * boardLength)] = pineapple;
                         else newBoard[i] = pineapple;
                     }
                     return newBoard;
@@ -548,8 +548,8 @@ export default function Game(){
             moves.current++;
             setBoard(prevBoard => {
                 const newBoard = [...prevBoard];
-                newBoard[endSquare.current.id] = prevBoard[firstSquare.current.id]
-                newBoard[firstSquare.current.id] = prevBoard[endSquare.current.id]
+                newBoard[endSquare.current.getAttribute('data-gameid')] = prevBoard[firstSquare.current.getAttribute('data-gameid')]
+                newBoard[firstSquare.current.getAttribute('data-gameid')] = prevBoard[endSquare.current.getAttribute('data-gameid')]
                 return newBoard
             })
             swapped.current = false;
@@ -718,12 +718,15 @@ export default function Game(){
     }
 
     const handleEnd = () =>{
+        console.log(firstSquare.current)
+        console.log(firstSquare.current.getAttribute('data-gameid'))
+        console.log(firstSquare.current.draggable)
         setIsClicked(false)
         if(!isReady()) return
         if(moves.current <= 0) return
         if((endSquare.current === null || firstSquare.current === null)) return
-        const fId = parseInt(firstSquare.current.id)
-        const lId = parseInt(endSquare.current.id)
+        const fId = parseInt(firstSquare.current.getAttribute('data-gameid'))
+        const lId = parseInt(endSquare.current.getAttribute('data-gameid'))
         const isNeighbour = Math.abs(lId - fId);
         //if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
         setBoard(prevBoard => {
@@ -957,7 +960,7 @@ export default function Game(){
                             alt={"Lightning"}/>
                 ))}
                 {board.map((element, index)=>(
-                    <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.id) )? {backgroundColor: 'rgba(180,180,180,0.7)'}:{backgroundColor: 'rgba(60,60,60, 0.7)'} ):{backgroundColor: 'rgba(180,180,180, 0.7)'}} className={styles.fruitHolder}>
+                    <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.getAttribute('data-gameid')) )? {backgroundColor: 'rgba(180,180,180,0.7)'}:{backgroundColor: 'rgba(60,60,60, 0.7)'} ):{backgroundColor: 'rgba(180,180,180, 0.7)'}} className={styles.fruitHolder}>
                         <Image 
                             className={styles.fruit}
                             ref={el => BoardRef.current[index] = el}
@@ -970,7 +973,7 @@ export default function Game(){
                             onDrop = {handleDrop}
                             onClick = {clickHandler}
                             src = {element.src}  
-                            id = {index}
+                            data-gameid = {index}
                             name = {element.name}  
                             alt= {element.name} />
                     </div>   
