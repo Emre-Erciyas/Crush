@@ -725,7 +725,7 @@ export default function Game(){
         const fId = parseInt(firstSquare.current.getAttribute('data-gameid'))
         const lId = parseInt(endSquare.current.getAttribute('data-gameid'))
         const isNeighbour = Math.abs(lId - fId);
-        if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
+        //if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
         setBoard(prevBoard => {
             const newBoard = [...prevBoard];
             if(endSquare.current.name === "Watermelon" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple" ){
@@ -952,6 +952,7 @@ export default function Game(){
                 <div ref = {pineappleExplosionVerticalRef} className={styles.pineappleExplosionVertical} />
                 {board.map((element, index)=>(
                       <Image 
+                            loading="eager"
                             ref={el => boltsRef.current[index] = el}
                             className={styles.bolt}
                             src = {lightning.src} 
@@ -962,6 +963,7 @@ export default function Game(){
                 {board.map((element, index)=>(
                     <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.getAttribute('data-gameid')) )? {backgroundColor: 'rgba(180,180,180,0.7)'}:{backgroundColor: 'rgba(60,60,60, 0.7)'} ):{backgroundColor: 'rgba(180,180,180, 0.7)'}} className={styles.fruitHolder}>
                         <Image 
+                            loading= "eager"
                             className={styles.fruit}
                             ref={el => BoardRef.current[index] = el}
                             draggable = {true}
