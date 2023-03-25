@@ -29,6 +29,10 @@
     position: absolute;
     top: 50px;
     color: #38204F;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .buttons{
@@ -53,4 +57,11 @@
         width: 200px;
         height: 80px;
     }
+}
+
+.name{
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-size: 2rem;
 }

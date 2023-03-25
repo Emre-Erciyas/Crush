@@ -1,0 +1,82 @@
+.form{
+    position: absolute;
+    top:2rem;
+    left:1rem;
+    margin: 0;
+    width: 70%;
+}
+
+.inputDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 70%;
+    margin-top: 2rem;
+}
+
+.p{
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    margin-right: 1.5rem;
+    margin-left: 0;
+}
+
+.input{
+    border-radius: 5px;
+    height: 2rem;
+    width: 15rem;
+    letter-spacing: 1px;
+    margin-right: 1rem;
+}
+
+.button{
+    width: 100px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin: 0;
+    background-color: #e7e7e7;
+    border:none;
+    border: 1px solid black;
+}
+
+.button:hover{
+    cursor: pointer;
+    background-color: #c9c9c9;
+}
+.icon{
+    margin-right: 10px;
+    margin-top: 5px;
+
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: #D64DCF;
+}
+
+.goback{
+    text-decoration: none;
+    background-color: #e7e7e7; 
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    font-size: 1.1rem;
+    width: 120px;
+    height: 48px;
+    border-radius: 3px;
+    border: 1px solid black;
+    margin-bottom: 2rem;
+
+}

@@ -1,15 +1,12 @@
 'use client'
 import React from 'react'
-import nick from './nick.module.css'
-import './globals.css'
-import { useRouter } from 'next/navigation';
-import {BsCheckCircleFill} from 'react-icons/bs'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Nickname() {
-    
+import styles from './settings.module.css'
+import '../globals.css'
+import Link from 'next/link';
+export default function Settings() {
     const [input, setInput] = React.useState('');
-    const router = useRouter();
     function handleSubmit(e){
         e.preventDefault()
         const pattern = /^[a-zA-Z]{3,16}$/
@@ -26,12 +23,20 @@ export default function Nickname() {
                 });
             return
         }
-        sessionStorage.setItem("nickname", input)
-        router.push('/Menu');
-        
+        sessionStorage.setItem('nickname', input)
+        toast.success('Successful', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
     }
     return (
-        <div>
+        <div className = {styles.container}>
             <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -44,12 +49,12 @@ export default function Nickname() {
                     pauseOnHover
                     theme="dark"
             />
-            <form className = {nick.form} onSubmit={handleSubmit}>
-                <div className = {nick.inputDiv}>
-                    <p className={nick.p}>Nickname:</p>
+            <form className = {styles.form} onSubmit={handleSubmit}>
+                <div className = {styles.inputDiv}>
+                    <p className={styles.p}> Change Nickname:</p>
                     <input 
                         type="text"  
-                        className={nick.input}
+                        className={styles.input}
                         placeholder = 'Nickname'
                         value={input}
                         onChange = {(e) => {setInput(e.target.value)}}
@@ -57,9 +62,10 @@ export default function Nickname() {
                         maxLength= {16}
                         required
                         />
+                        <button className={styles.button}>Change</button>
                 </div>
-                <button className = {nick.go} type='submit'><span className ={nick.icon}><BsCheckCircleFill/></span>Start</button>
             </form>
+            <Link href='/Menu' className={styles.goback}>Go back</Link>
         </div>
     )
 }

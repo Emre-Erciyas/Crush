@@ -5,6 +5,10 @@ import { boardLength, fruits, blank, watermelon, bomb, pineapple, animationDurat
 import Image from "next/image"
 import "../globals.css"
 import Link from "next/link"
+import { db } from "@/firebase"
+import {doc, setDoc,getDoc} from "firebase/firestore"; 
+import { useRouter } from "next/navigation"
+import Loading from "@/loading"
 
 export default function Game(){
     
@@ -12,12 +16,19 @@ export default function Game(){
     const [board, setBoard] = React.useState([])
     //isClicked
     const [isClicked, setIsClicked] = React.useState(false)
+
+    const [loading, setLoading] = React.useState(true);
+
+    const windowLoaded = React.useRef(false)
+
     //Save the squares that are chosen by the player without re-render.
     const firstSquare = React.useRef(null);
     const endSquare = React.useRef(null);
 
     //swapped is a boolean that will revert the move if it was not correct.
     const swapped = React.useRef(false)
+    
+    const router = useRouter();
 
     //The Score
     const score = React.useRef(0);
@@ -28,9 +39,6 @@ export default function Game(){
     //Remaining Moves
     const moves = React.useRef(30)
 
-    //Ref to Link component
-    const linkRef = React.useRef(null)
-    const refreshRef = React.useRef(null)
     //Reference to all elements in the array xd
     const BoardRef = React.useRef(new Array(boardLength ** 2))
 
@@ -55,7 +63,8 @@ export default function Game(){
     //animation going on
     const isAnimation = React.useRef(false);
 
-    
+    const gameEnd = React.useRef(false)
+
     //This Function creates the board when the game starts. It is used in useEffect and only runs once.
     const createBoard = () =>{
         const arr = []
@@ -578,9 +587,6 @@ export default function Game(){
             }
         }
     }
-    React.useEffect(()=>{
-        createBoard();
-    }, [])
     //make the moves slower
     React.useEffect(()=>{
         const waitTime = isAnimation.current ? animationDuration : 30;
@@ -594,23 +600,71 @@ export default function Game(){
     React.useEffect(() => {
         if(moves.current > 0) return 
         if(!isReady()) return
-        const clicker = () =>{
-            if(linkRef.current) linkRef.current.click();
+        if(gameEnd.current) return
+        gameEnd.current = true;
+        let arr = []
+        async function leaderBoardAddition(){
+            try{
+                let exists = false;
+                const docRef = doc(db, "Leaderboard", "First10");
+                const docSnap = await getDoc(docRef);
+                if(docSnap && docSnap.data()) arr = docSnap.data().leaderboard;
+                const temp = {
+                    id: "id" + Math.random().toString(16).slice(2),
+                    name: (windowLoaded && sessionStorage.getItem("nickname")),
+                    score: score.current
+                };
+                (arr && arr.length > 0  && arr.sort((a,b) => a.score - b.score).reverse())
+                for(let i = 0;i < arr.length; i++){
+                    if(arr[i].name === temp.name){
+                        arr[i].score = Math.max(temp.score, arr[i].score);
+                        exists = true;
+                        break;
+                    }
+                }
+                if(!exists && (!arr || arr.length < 10)) arr.push(temp);
+                else if((!exists && arr[arr.length - 1].score < score.current)){
+                    arr.pop();
+                    arr.push(temp);
+                };
+                try {
+                    await setDoc(doc(db, 'Leaderboard', 'First10'), {leaderboard: arr})
+                } catch (e) {
+                    console.log("Error adding document: ", e);
+                }
+            }
+            catch(e){
+                console.log("Error getting document: ", e);
+            }
         }
+        const clicker = () =>{
+            router.push('/Endpage')
+        }
+        leaderBoardAddition()
         setTimeout(clicker, 600);
         return () => clearTimeout(clicker)
-    })
+    }, [board])
     React.useEffect(()=>{
         score.current = 0;
-        if(typeof window !== 'undefined') {
+        createBoard();
+        windowLoaded.current = (typeof window !== 'undefined')
+        if(windowLoaded.current) {
             if(innerWidth >= 656) imageWidth.current = 80;
             else if(innerWidth >= 496) imageWidth.current = 60; 
             else imageWidth.current = 40
         }
     }, [])
+    React.useEffect(()=>{
+        if(board.length === 64) setLoading(false)
+    })
+    React.useEffect(() =>{
+        if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
+            router.push('/')
+        } 
+    }, [])
 
     React.useEffect(()=>{
-        if(typeof window !== 'undefined') sessionStorage.setItem("score", score.current)
+        if(windowLoaded.current) sessionStorage.setItem("score", score.current)
     },[score.current])
 
     const makeInvisible = (currentRef) =>{
@@ -620,19 +674,18 @@ export default function Game(){
     }
     React.useEffect(() => {
         function handleResize() {
-            if(typeof window !== 'undefined') {
+            if(windowLoaded.current) {
                 if(innerWidth >= 656) imageWidth.current = 80;
                 else if(innerWidth >= 496) imageWidth.current = 60 
                 else imageWidth.current = 40
             }
         }
-        if(typeof window !== 'undefined') window.addEventListener('resize', handleResize);
+        if(windowLoaded.current) window.addEventListener('resize', handleResize);
     
         return () => {
           window.removeEventListener('resize', handleResize);
         };
       }, []);
-
     const pineapple1 = (id) =>{
         verticalRef.current.style.visibility = 'visible'
         verticalRef.current.style.left = `${(id % boardLength) * imageWidth.current + (0.375 * imageWidth.current)}px`
@@ -725,7 +778,7 @@ export default function Game(){
         const fId = parseInt(firstSquare.current.getAttribute('data-gameid'))
         const lId = parseInt(endSquare.current.getAttribute('data-gameid'))
         const isNeighbour = Math.abs(lId - fId);
-        //if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
+        if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
         setBoard(prevBoard => {
             const newBoard = [...prevBoard];
             if(endSquare.current.name === "Watermelon" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple" ){
@@ -924,19 +977,22 @@ export default function Game(){
         }
     }
     const reset = () => {
-        if(typeof window !== 'undefined') window.location.reload();
+        if(windowLoaded.current) window.location.reload();
     }
+    if(loading) return <Loading />
+
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
                 <div className={styles.left}>
+                <h1 className={styles.score} >{(windowLoaded.current) && sessionStorage.getItem('nickname')}</h1>
                     <h1 className={styles.score}>Score: {score.current}</h1>
                     <h1 className={styles.score}>Moves: {moves.current}</h1>
                     
                 </div>
                 <div>
                     <button onClick={reset} className={styles.refresh}>Refresh</button>
-                    <Link href='/Endpage' ref={linkRef} className={styles.quit}>Quit</Link>
+                    <Link href='/Menu' className={styles.quit}>Quit</Link>
                 </div>
             </nav>
             <div className={styles.game}>
