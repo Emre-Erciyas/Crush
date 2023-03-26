@@ -21,6 +21,8 @@ export default function Game(){
 
     const windowLoaded = React.useRef(false)
 
+    const myDivRef = React.useRef(null);
+
     //Save the squares that are chosen by the player without re-render.
     const firstSquare = React.useRef(null);
     const endSquare = React.useRef(null);
@@ -539,6 +541,7 @@ export default function Game(){
     //This Function Checks the board for matches. If there is a match state is changed and component is re-rendered.
     //Since setState only affects the next re-render, do only one change after every re-render.
     const checkBoard = () =>{
+        if(loading) return
         if(swapped.current) moves.current--;
         //make so that if there is a blank currently do not make a match.
         if(!isReady()) return
@@ -567,6 +570,7 @@ export default function Game(){
 
     //Fill the board when there are blank squares.
     const fillBoard = () =>{
+        if(loading) return
         for(let i = boardLength ** 2 - 1; i >= 0 ; i--){
             if(board[i] === blank){
                 if(i < boardLength){
@@ -654,9 +658,10 @@ export default function Game(){
             else imageWidth.current = 40
         }
     }, [])
-    React.useEffect(()=>{
-        if(board.length === 64) setLoading(false)
-    })
+    React.useEffect(() => {
+        // This code will run after myDivRef is defined and updated
+        setLoading(false)
+      }, [myDivRef]);
     React.useEffect(() =>{
         if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
             router.push('/')
@@ -995,26 +1000,7 @@ export default function Game(){
                     <Link href='/Menu' className={styles.quit}>Quit</Link>
                 </div>
             </nav>
-            <div className={styles.game}>
-                <div ref = {horizontalRef} className={styles.horizontal} />
-                <div ref = {verticalRef} className={styles.vertical} />
-                <div ref = {rotated45Ref} className={styles.rotated45} />
-                <div ref = {rotated135Ref} className={styles.rotated135} />
-                <div ref = {rotated225Ref} className={styles.rotated225} />
-                <div ref = {rotated315Ref} className={styles.rotated315} />
-                <div ref = {explosionRef} className={styles.explosion} />
-                <div ref = {explosion2Ref} className={styles.explosion2} />
-                <div ref = {pineappleExplosionHorizontalRef } className={styles.pineappleExplosionHorizontal} />
-                <div ref = {pineappleExplosionVerticalRef} className={styles.pineappleExplosionVertical} />
-                {board.map((element, index)=>(
-                      <Image 
-                            ref={el => boltsRef.current[index] = el}
-                            className={styles.bolt}
-                            src = {lightning.src} 
-                            key = {index} 
-                            id = {index}
-                            alt={"Lightning"}/>
-                ))}
+            <div className={styles.game} ref = {myDivRef} >
                 {board.map((element, index)=>(
                     <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.getAttribute('data-gameid')) )? {backgroundColor: 'rgba(180,180,180,0.7)'}:{backgroundColor: 'rgba(60,60,60, 0.7)'} ):{backgroundColor: 'rgba(180,180,180, 0.7)'}} className={styles.fruitHolder}>
                         <Image 
@@ -1034,6 +1020,30 @@ export default function Game(){
                             alt= {element.name} />
                     </div>   
                 ))}
+                {!loading &&
+                <>
+                    <div ref = {horizontalRef} className={styles.horizontal} />
+                    <div ref = {verticalRef} className={styles.vertical} />
+                    <div ref = {rotated45Ref} className={styles.rotated45} />
+                    <div ref = {rotated135Ref} className={styles.rotated135} />
+                    <div ref = {rotated225Ref} className={styles.rotated225} />
+                    <div ref = {rotated315Ref} className={styles.rotated315} />
+                    <div ref = {explosionRef} className={styles.explosion} />
+                    <div ref = {explosion2Ref} className={styles.explosion2} />
+                    <div ref = {pineappleExplosionHorizontalRef } className={styles.pineappleExplosionHorizontal} />
+                    <div ref = {pineappleExplosionVerticalRef} className={styles.pineappleExplosionVertical} />
+                </>
+                }
+                {!loading && board.map((element, index)=>(
+                      <Image 
+                            ref={el => boltsRef.current[index] = el}
+                            className={styles.bolt}
+                            src = {lightning.src} 
+                            key = {index} 
+                            id = {index}
+                            alt={"Lightning"}/>
+                ))}
+                
             </div>
         </div>
     )
