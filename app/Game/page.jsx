@@ -66,7 +66,6 @@ export default function Game(){
     const isAnimation = React.useRef(false);
 
     const gameEnd = React.useRef(false)
-
     //This Function creates the board when the game starts. It is used in useEffect and only runs once.
     const createBoard = () =>{
         const arr = []
@@ -983,9 +982,8 @@ export default function Game(){
     }
     const reset = () => {
         if(windowLoaded.current) window.location.reload();
-    }
-    if(loading) return <Loading />
-
+    }   
+    if(loading) return (<Loading />);
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
