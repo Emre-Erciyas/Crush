@@ -8,10 +8,9 @@ import Link from "next/link"
 import { db } from "@/firebase"
 import {doc, setDoc,getDoc} from "firebase/firestore"; 
 import { useRouter } from "next/navigation"
-import Loading from "@/loading"
 
 export default function Game(){
-    
+
     //Current Board of the game.
     const [board, setBoard] = React.useState([])
     //isClicked
@@ -20,8 +19,6 @@ export default function Game(){
     const [loading, setLoading] = React.useState(true);
 
     const windowLoaded = React.useRef(false)
-
-    const myDivRef = React.useRef(null);
 
     //Save the squares that are chosen by the player without re-render.
     const firstSquare = React.useRef(null);
@@ -46,8 +43,9 @@ export default function Game(){
 
     const imageWidth = React.useRef(0)
 
-    //audioRef 
-    //const audioRef = useRef(null);
+    //loaded
+
+    const loadCount = React.useRef(0)
 
     //Reference to lines
     const horizontalRef = React.useRef(null)
@@ -599,7 +597,7 @@ export default function Game(){
             clearTimeout(fill)
         }
         
-    }, [board])
+    }, [board, loading])
     React.useEffect(() => {
         if(moves.current > 0) return 
         if(!isReady()) return
@@ -657,10 +655,8 @@ export default function Game(){
             else imageWidth.current = 40
         }
     }, [])
-    React.useEffect(() => {
-        // This code will run after myDivRef is defined and updated
-        setLoading(false)
-      }, [myDivRef]);
+    
+
     React.useEffect(() =>{
         if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
             router.push('/')
@@ -982,8 +978,11 @@ export default function Game(){
     }
     const reset = () => {
         if(windowLoaded.current) window.location.reload();
-    }   
-    if(loading) return (<Loading />);
+    }
+    const handleLoad = () =>{
+        loadCount.current++;
+        if(loadCount.current === 64) {setLoading(false); console.log('zaa')}
+    }
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
@@ -998,7 +997,7 @@ export default function Game(){
                     <Link href='/Menu' className={styles.quit}>Quit</Link>
                 </div>
             </nav>
-            <div className={styles.game} ref = {myDivRef} >
+            <div className={styles.game} >
                 {board.map((element, index)=>(
                     <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.getAttribute('data-gameid')) )? {backgroundColor: 'rgba(180,180,180,0.7)'}:{backgroundColor: 'rgba(60,60,60, 0.7)'} ):{backgroundColor: 'rgba(180,180,180, 0.7)'}} className={styles.fruitHolder}>
                         <Image 
@@ -1014,7 +1013,8 @@ export default function Game(){
                             onClick = {clickHandler}
                             src = {element.src}  
                             data-gameid = {index}
-                            name = {element.name}  
+                            name = {element.name} 
+                            onLoadingComplete = {handleLoad} 
                             alt= {element.name} />
                     </div>   
                 ))}
