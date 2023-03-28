@@ -8,7 +8,6 @@ import Link from "next/link"
 import { db } from "@/firebase"
 import {doc, setDoc,getDoc} from "firebase/firestore"; 
 import { useRouter } from "next/navigation"
-import Loading from "@/loading"
 
 export default function Game(){
 
@@ -991,7 +990,6 @@ export default function Game(){
     }
     return (
         <div className={styles.container}>
-            {loading && <Loading />}
             {!loading && <nav className={styles.navbar}>
                 <div className={styles.left}>
                 <h1 className={styles.score} >{(windowLoaded.current) && sessionStorage.getItem('nickname')}</h1>
