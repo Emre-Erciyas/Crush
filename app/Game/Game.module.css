@@ -256,10 +256,11 @@
         width:480px;
     }
     .refresh{
-        right: 120px
+        right: 120px;
     }
     .quit{
         right: 16px;
+       
     }
     .fruit{
         height: 58px;
@@ -328,11 +329,17 @@
     .score, .quit, .refresh{
         font-size: 0.8rem;
     }
+    .score{
+        margin: 0 5px;
+    }
     .quit{
         right: 0;
+       
+
     }
     .refresh{
         right: 88px;
+     
     }
     .left{
         padding: 4px;
@@ -405,5 +412,88 @@
     .fruitHolder{
         width: 40px;
         height: 40px;
+    }
+}
+@media (max-width: 348px),(max-height: 348px){
+    .score, .quit, .refresh{
+        font-size: 0.5rem;
+    }
+    .quit{
+        right: 0;
+    }
+    .refresh{
+        right: 72px;
+    }
+    .left{
+        padding: 4px;
+    }
+    .navbar{
+        padding: 8px 0px ;
+    }
+    .game{
+        height:264px;
+        width:264px;
+    }
+    .fruit{
+        height: 30px;
+        width: 30px;
+    }
+    .vertical, .rotated45, .rotated135, .rotated225, .rotated315{
+        width:10px;
+    }
+    .horizontal{
+        height: 10px;
+    }
+    .bolt{
+        width: 30px;
+    }
+    .explosion{
+        width: 25px;
+        height: 25px;
+        box-shadow: 0 0 25px 25px rgba(255,255,0, 0.9),
+                0 0 50px 30px rgba(255,255,0, 0.8), 
+                0 0 80px 40px rgba(255,255,0, 0.7),
+                0 0 110px 50px rgba(255,255,0, 0.7),
+                0 0 140px 60px rgba(255,255,0, 0.6),
+                0 0 170px 70px rgba(255,255,0, 0.5);
+    }
+    .explosion2{
+        width: 25px;
+        height: 25px;
+        box-shadow: 0 0 10px 20px rgba(255,255,0, 0.9),
+                0 0 40px 35px rgba(255,255,0, 0.82), 
+                0 0 70px 50px rgba(255,255,0, 0.75),
+                0 0 100px 65px rgba(255,255,0, 0.68),
+                0 0 130px 80px rgba(255,255,0, 0.6),
+                0 0 160px 90px rgba(255,255,0, 0.53),
+                0 0 190px 100px rgba(255,255,0, 0.45),
+                0 0 220px 110px rgba(255,255,0, 0.38),
+                0 0 250px 120px rgba(255,255,0, 0.3),
+                0 0 280px 130px rgba(255,255,0, 0.23),
+                0 0 310px 140px rgba(255,255,0, 0.15);
+    }
+    .pineappleExplosionVertical{
+        width: 15px;
+        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
+                0 0 30px 15px rgba(255,145,0, 0.7),      
+                0 0 40px 25px rgba(255,255,0, 0.7),                                    
+                0 0 50px 30px rgba(0,255,0, 0.5),                                    
+                0 0 60px 35px rgba(0,255,145, 0.55),
+                0 0 70px 45px rgba(0,255,255, 0.5),                                    
+                0 0 80px 55px rgba(0,0,255, 0.5);   
+    }
+    .pineappleExplosionHorizontal{
+        height: 15px;
+        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
+                0 0 30px 15px rgba(255,145,0, 0.7),      
+                0 0 40px 25px rgba(255,255,0, 0.7),                                    
+                0 0 50px 30px rgba(0,255,0, 0.5),                                    
+                0 0 60px 35px rgba(0,255,145, 0.55),
+                0 0 70px 45px rgba(0,255,255, 0.5),                                    
+                0 0 80px 55px rgba(0,0,255, 0.5);        
+    }
+    .fruitHolder{
+        width: 33px;
+        height: 33px;
     }
 }

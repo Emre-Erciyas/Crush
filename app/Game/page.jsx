@@ -647,7 +647,7 @@ export default function Game(){
         }
         leaderBoardAddition()
         setTimeout(changer, 600);
-        return () => clearTimeout(clicker)
+        return () => clearTimeout(changer)
     }, [board])
     React.useEffect(()=>{
         if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
@@ -659,7 +659,8 @@ export default function Game(){
         if(windowLoaded.current) {
             if(innerWidth >= 656) imageWidth.current = 80;
             else if(innerWidth >= 496) imageWidth.current = 60; 
-            else imageWidth.current = 40
+            else if(innerWidth >= 348) imageWidth.current = 40
+            else imageWidth.current = 33
         }
     }, [])
     
@@ -670,11 +671,10 @@ export default function Game(){
 
     React.useEffect(() => {
         function handleResize() {
-            if(windowLoaded.current) {
-                if(innerWidth >= 656) imageWidth.current = 80;
-                else if(innerWidth >= 496) imageWidth.current = 60 
-                else imageWidth.current = 40
-            }
+            if(innerWidth >= 656) imageWidth.current = 80;
+            else if(innerWidth >= 496) imageWidth.current = 60; 
+            else if(innerWidth >= 348) imageWidth.current = 40
+            else imageWidth.current = 33
         }
         if(windowLoaded.current) window.addEventListener('resize', handleResize);
     
@@ -781,7 +781,7 @@ export default function Game(){
         const fId = parseInt(firstSquare.current.getAttribute('data-gameid'))
         const lId = parseInt(endSquare.current.getAttribute('data-gameid'))
         const isNeighbour = Math.abs(lId - fId);
-        if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
+        //if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
         setBoard(prevBoard => {
             const newBoard = [...prevBoard];
             if(endSquare.current.name === "Watermelon" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple" ){
