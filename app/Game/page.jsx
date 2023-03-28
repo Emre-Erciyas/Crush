@@ -642,14 +642,17 @@ export default function Game(){
                 console.log("Error getting document: ", e);
             }
         }
-        const clicker = () =>{
+        const changer = () =>{
             router.push('/Endpage')
         }
         leaderBoardAddition()
-        setTimeout(clicker, 600);
+        setTimeout(changer, 600);
         return () => clearTimeout(clicker)
     }, [board])
     React.useEffect(()=>{
+        if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
+            router.push('/')
+        } 
         score.current = 0;
         createBoard();
         windowLoaded.current = (typeof window !== 'undefined')
@@ -661,21 +664,10 @@ export default function Game(){
     }, [])
     
 
-    React.useEffect(() =>{
-        if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
-            router.push('/')
-        } 
-    }, [])
-
     React.useEffect(()=>{
         if(windowLoaded.current) sessionStorage.setItem("score", score.current)
     },[score.current])
 
-    const makeInvisible = (currentRef) =>{
-        isAnimation.current = false;
-        if(!currentRef) return
-        currentRef.style.visibility = 'hidden';
-    }
     React.useEffect(() => {
         function handleResize() {
             if(windowLoaded.current) {
@@ -690,6 +682,13 @@ export default function Game(){
           window.removeEventListener('resize', handleResize);
         };
       }, []);
+
+    const makeInvisible = (currentRef) =>{
+        isAnimation.current = false;
+        if(!currentRef) return
+        currentRef.style.visibility = 'hidden';
+    }
+    
     const pineapple1 = (id) =>{
         verticalRef.current.style.visibility = 'visible'
         verticalRef.current.style.left = `${(id % boardLength) * imageWidth.current + (0.375 * imageWidth.current)}px`

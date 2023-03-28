@@ -5,8 +5,11 @@ import {doc, setDoc,getDoc} from "firebase/firestore";
 import styles from './leaderboard.module.css'
 import '../globals.css'
 import Link from 'next/link';
+import Loading from '@/loading';
 export default function Leaderboard() {
     const [leaderboard, setLeaderboard] = React.useState([])
+    const [loading, setLoading] = React.useState(true)
+
     React.useEffect(() =>{
         let arr = []
         async function getLeaderboard(){
@@ -17,7 +20,7 @@ export default function Leaderboard() {
                 arr = docSnap.data().leaderboard;
                 (arr && arr.length > 0  && arr.sort((a,b) => a.score - b.score).reverse())
                 setLeaderboard(arr)
-                
+                setLoading(false)
             }
             catch(e){
                 console.log("Error getting document: ", e);
@@ -27,6 +30,7 @@ export default function Leaderboard() {
         getLeaderboard()
         
     }, [])
+    if(loading) return <Loading />
     return (
         <div className={styles.container}>
             <h1 className={styles.leaderboard}>Leaderboard</h1>

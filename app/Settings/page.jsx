@@ -51,7 +51,7 @@ export default function Settings() {
             />
             <form className = {styles.form} onSubmit={handleSubmit}>
                 <div className = {styles.inputDiv}>
-                    <p className={styles.p}> Change Nickname:</p>
+                    <p className={styles.p}>Nickname:</p>
                     <input 
                         type="text"  
                         className={styles.input}
