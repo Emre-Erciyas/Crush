@@ -781,7 +781,7 @@ export default function Game(){
         const fId = parseInt(firstSquare.current.getAttribute('data-gameid'))
         const lId = parseInt(endSquare.current.getAttribute('data-gameid'))
         const isNeighbour = Math.abs(lId - fId);
-        //if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
+        if((isNeighbour !== boardLength && isNeighbour !== 1) || (isNeighbour === 1 && ((lId % boardLength === 0 && fId % boardLength === boardLength - 1) || (fId % boardLength === 0 && lId % boardLength === boardLength - 1)))) return;
         setBoard(prevBoard => {
             const newBoard = [...prevBoard];
             if(endSquare.current.name === "Watermelon" && firstSquare.current.name !== "Watermelon" && firstSquare.current.name !== "Bomb" && firstSquare.current.name !== "Pineapple" ){
