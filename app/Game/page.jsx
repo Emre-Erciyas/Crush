@@ -8,16 +8,20 @@ import Link from "next/link"
 import { db } from "@/firebase"
 import {doc, setDoc,getDoc} from "firebase/firestore"; 
 import { useRouter } from "next/navigation"
+import Loading from "@/loading"
 
 export default function Game(){
 
     //Current Board of the game.
     const [board, setBoard] = React.useState([])
-    //isClicked
+
+    //if currently selected a square to swap or not.
     const [isClicked, setIsClicked] = React.useState(false)
 
+    //stops making moves and loading animations before content is loaded
     const [loading, setLoading] = React.useState(true);
 
+    //window object loaded or not. in next.js this is needed.
     const windowLoaded = React.useRef(false)
 
     //Save the squares that are chosen by the player without re-render.
@@ -27,6 +31,7 @@ export default function Game(){
     //swapped is a boolean that will revert the move if it was not correct.
     const swapped = React.useRef(false)
     
+    //next.js router
     const router = useRouter();
 
     //The Score
@@ -38,13 +43,13 @@ export default function Game(){
     //Remaining Moves
     const moves = React.useRef(30)
 
-    //Reference to all elements in the array xd
+    //Reference to all elements in the array
     const BoardRef = React.useRef(new Array(boardLength ** 2))
 
+    //image width is determined by screen size
     const imageWidth = React.useRef(0)
 
-    //loaded
-
+    //if all the images loaded at the start, then set loading to false.
     const loadCount = React.useRef(0)
 
     //Reference to lines
@@ -980,12 +985,14 @@ export default function Game(){
         if(windowLoaded.current) window.location.reload();
     }
     const handleLoad = () =>{
+        if(loadCount.current >= 64) return
         loadCount.current++;
-        if(loadCount.current === 64) {setLoading(false); console.log('zaa')}
+        if(loadCount.current === 64) setLoading(false)
     }
     return (
         <div className={styles.container}>
-            <nav className={styles.navbar}>
+            {loading && <Loading />}
+            {!loading && <nav className={styles.navbar}>
                 <div className={styles.left}>
                 <h1 className={styles.score} >{(windowLoaded.current) && sessionStorage.getItem('nickname')}</h1>
                     <h1 className={styles.score}>Score: {score.current}</h1>
@@ -996,7 +1003,7 @@ export default function Game(){
                     <button onClick={reset} className={styles.refresh}>Refresh</button>
                     <Link href='/Menu' className={styles.quit}>Quit</Link>
                 </div>
-            </nav>
+            </nav>}
             <div className={styles.game} >
                 {board.map((element, index)=>(
                     <div key = {index} style ={isClicked ? ((firstSquare.current && parseInt(index) === parseInt(firstSquare.current.getAttribute('data-gameid')) )? {backgroundColor: 'rgba(180,180,180,0.7)'}:{backgroundColor: 'rgba(60,60,60, 0.7)'} ):{backgroundColor: 'rgba(180,180,180, 0.7)'}} className={styles.fruitHolder}>
@@ -1014,7 +1021,7 @@ export default function Game(){
                             src = {element.src}  
                             data-gameid = {index}
                             name = {element.name} 
-                            onLoadingComplete = {handleLoad} 
+                            onLoad= {handleLoad} 
                             alt= {element.name} />
                     </div>   
                 ))}
