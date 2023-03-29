@@ -1019,6 +1019,7 @@ export default function Game(){
                             data-gameid = {index}
                             name = {element.name} 
                             onLoad= {handleLoad} 
+                            priority
                             alt= {element.name} />
                     </div>   
                 ))}
