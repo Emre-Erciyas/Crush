@@ -58,3 +58,29 @@
     margin-top: 5px;
 
 }
+
+
+@media (max-width: 400px){
+    .inputDiv{
+        flex-direction: column;
+        width: 100vw;
+        margin-bottom: 3rem;
+    }
+    .input{
+        width: 80%;
+    }
+    .p{
+        margin-bottom: 3rem;
+        margin-top: 3rem;
+        font-size: 1.2rem;
+    }
+    .go{
+        width: 200px;
+        height: 80px;
+        border: 2px solid #38204F;
+        font-size: 1.5rem;
+    }
+    .form{
+        justify-content: flex-start;
+    }
+}
