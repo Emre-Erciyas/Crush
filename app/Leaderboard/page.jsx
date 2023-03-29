@@ -9,6 +9,7 @@ import Loading from '@/loading';
 export default function Leaderboard() {
     const [leaderboard, setLeaderboard] = React.useState([])
     const [loading, setLoading] = React.useState(true)
+
     React.useEffect(() =>{
         let arr = []
         async function getLeaderboard(){
