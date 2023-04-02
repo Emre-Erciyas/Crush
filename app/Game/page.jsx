@@ -603,6 +603,9 @@ export default function Game(){
         
     }, [board, loading])
     React.useEffect(() => {
+        if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
+            router.push('/')
+        } 
         if(moves.current > 0) return 
         if(!isReady()) return
         if(gameEnd.current) return
@@ -650,11 +653,9 @@ export default function Game(){
         return () => clearTimeout(changer)
     })
     React.useEffect(()=>{
-        if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
-            router.push('/')
-        } 
         score.current = 0;
         createBoard();
+        gameEnd.current = false;
         windowLoaded.current = (typeof window !== 'undefined')
         if(windowLoaded.current) {
             if(innerWidth >= 656 ) imageWidth.current = 80;
