@@ -609,7 +609,6 @@ export default function Game(){
         gameEnd.current = true;
         let arr = []
         async function leaderBoardAddition(){
-            alert()
             try{
                 let exists = false;
                 const docRef = doc(db, "Leaderboard", "First10");
@@ -636,10 +635,12 @@ export default function Game(){
                 try {
                     await setDoc(doc(db, 'Leaderboard', 'First10'), {leaderboard: arr})
                 } catch (e) {
-                    console.log('Oops, something went wrong: ' + error.message);                }
+                    console.log('Oops, something went wrong: ' + error.message);                
+                }
             }
             catch(e){
-                console.log('Oops, something went wrong: ' + error.message);            }
+                console.log('Oops, something went wrong: ' + error.message);            
+            }
         }
         const changer = () =>{
             router.push('/Endpage')
