@@ -648,9 +648,7 @@ export default function Game(){
         const changer = () =>{
             router.push('/Endpage')
         }
-        leaderBoardAddition()
-        setTimeout(changer, 600);
-        return () => clearTimeout(changer)
+        leaderBoardAddition().finally(setTimeout(changer, 600));
     })
     React.useEffect(()=>{
         score.current = 0;
