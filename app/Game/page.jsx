@@ -628,7 +628,7 @@ export default function Game(){
                         break;
                     }
                 }
-                if(!exists && (!arr || arr.length < 10)) arr.push(temp);
+                if(!exists && (arr.length < 10)) arr.push(temp);
                 else if((!exists && arr[arr.length - 1].score < score.current)){
                     arr.pop();
                     arr.push(temp);
@@ -636,10 +636,10 @@ export default function Game(){
                 try {
                     await setDoc(doc(db, 'Leaderboard', 'First10'), {leaderboard: arr})
                 } catch (e) {
-                    alert('Oops, something went wrong: ' + error.message);                }
+                    console.log('Oops, something went wrong: ' + error.message);                }
             }
             catch(e){
-                alert('Oops, something went wrong: ' + error.message);            }
+                console.log('Oops, something went wrong: ' + error.message);            }
         }
         const changer = () =>{
             router.push('/Endpage')
