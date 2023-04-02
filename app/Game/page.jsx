@@ -609,6 +609,7 @@ export default function Game(){
         gameEnd.current = true;
         let arr = []
         async function leaderBoardAddition(){
+            alert()
             try{
                 let exists = false;
                 const docRef = doc(db, "Leaderboard", "First10");
@@ -646,7 +647,7 @@ export default function Game(){
         leaderBoardAddition()
         setTimeout(changer, 600);
         return () => clearTimeout(changer)
-    }, [board])
+    })
     React.useEffect(()=>{
         if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
             router.push('/')
@@ -655,7 +656,7 @@ export default function Game(){
         createBoard();
         windowLoaded.current = (typeof window !== 'undefined')
         if(windowLoaded.current) {
-            if(innerWidth >= 656) imageWidth.current = 80;
+            if(innerWidth >= 656 ) imageWidth.current = 80;
             else if(innerWidth >= 496) imageWidth.current = 60; 
             else if(innerWidth >= 348) imageWidth.current = 40
             else imageWidth.current = 33
@@ -994,10 +995,6 @@ export default function Game(){
                     <h1 className={styles.score}>Moves: {moves.current}</h1>
                     
                 </div>
-                <div>
-                    <button onClick={reset} className={styles.refresh}>Refresh</button>
-                    <Link href='/Menu' className={styles.quit}>Quit</Link>
-                </div>
             </nav>}
             <div className={styles.game} >
                 {board.map((element, index)=>(
@@ -1048,6 +1045,10 @@ export default function Game(){
                             alt={"Lightning"}/>
                 ))}
                 
+            </div>
+            <div className={styles.menu}>
+                <button onClick={reset} className={styles.refresh}>Refresh</button>
+                <Link href='/Menu' className={styles.quit}>Quit</Link>
             </div>
         </div>
     )

@@ -41,8 +41,6 @@
 }
 
 .quit{
-    position: absolute;
-    right: 24px;
     text-decoration: none;
     font-size: 1.8rem;
     color: #38204F;
@@ -54,11 +52,15 @@
     margin: 0 10px;
     padding: 4px 24px;
 }
+.menu{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
 .refresh{
     font-family: "Times New Roman", Times, serif;
     border: none;
-    position: absolute;
-    right: 144px;
     text-decoration: none;
     font-size: 1.8rem;
     color: #38204F;
@@ -78,9 +80,9 @@
 .navbar{
     width: 100%;
     display: flex;
+    justify-content: center;
     position: relative;
     margin: 8px 0 24px 0;
-
 }
 
 .horizontal {
@@ -247,20 +249,13 @@
     align-items: center;
 }
 
-@media (max-width: 656px),(max-height: 656px){
+@media (max-width: 656px),(max-height: 800px){
     .score, .quit, .refresh{
         font-size: 1.2rem;
     }
     .game{
         height:480px;
         width:480px;
-    }
-    .refresh{
-        right: 120px;
-    }
-    .quit{
-        right: 16px;
-       
     }
     .fruit{
         height: 58px;
@@ -325,21 +320,12 @@
         height: 60px;
     }
 }
-@media (max-width: 496px),(max-height: 496px){
+@media (max-width: 496px),(max-height: 612px){
     .score, .quit, .refresh{
         font-size: 0.8rem;
     }
     .score{
         margin: 0 5px;
-    }
-    .quit{
-        right: 0;
-       
-
-    }
-    .refresh{
-        right: 88px;
-     
     }
     .left{
         padding: 4px;
@@ -414,15 +400,9 @@
         height: 40px;
     }
 }
-@media (max-width: 348px),(max-height: 348px){
+@media (max-width: 348px),(max-height: 450px){
     .score, .quit, .refresh{
         font-size: 0.5rem;
-    }
-    .quit{
-        right: 0;
-    }
-    .refresh{
-        right: 72px;
     }
     .left{
         padding: 4px;
