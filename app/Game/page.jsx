@@ -40,7 +40,7 @@ export default function Game(){
         score.current += s;
     }
     //Remaining Moves
-    const moves = React.useRef(30)
+    const moves = React.useRef(10)
 
     //Reference to all elements in the array
     const BoardRef = React.useRef(new Array(boardLength ** 2))
@@ -635,12 +635,10 @@ export default function Game(){
                 try {
                     await setDoc(doc(db, 'Leaderboard', 'First10'), {leaderboard: arr})
                 } catch (e) {
-                    console.log("Error adding document: ", e);
-                }
+                    alert('Oops, something went wrong: ' + error.message);                }
             }
             catch(e){
-                console.log("Error getting document: ", e);
-            }
+                alert('Oops, something went wrong: ' + error.message);            }
         }
         const changer = () =>{
             router.push('/Endpage')
@@ -1010,9 +1008,12 @@ export default function Game(){
                             draggable = {true}
                             onDragStart = {handleStart}
                             onDragEnd = {handleEnd}
-                            onDragOver = {(e) => e.preventDefault()}
-                            onDragEnter = {(e) => e.preventDefault()}
-                            onDragLeave = {(e) => e.preventDefault()}
+                            onDragOver = {(e) => { e.preventDefault()}}
+                            onDragEnter = {(e) => { e.preventDefault()}}
+                            onDragLeave = {(e) => { e.preventDefault()}}
+                            onTouchStart = {(e) =>console.log(e.targetTouches[0])}
+                            onTouchMove = {(e) =>console.log()}
+                            onTouchEnd = {(e) =>console.log(e.targetTouches[0])}
                             onDrop = {handleDrop}
                             onClick = {clickHandler}
                             src = {element.src}  
