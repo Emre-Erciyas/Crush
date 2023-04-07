@@ -1,2 +1,1 @@
-//todo
-env.local - loading 
+The site is created with Next.js 13 and firebase.
