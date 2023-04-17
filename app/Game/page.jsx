@@ -14,7 +14,7 @@ export default function Game(){
     //Current Board of the game.
     const [board, setBoard] = React.useState([])
 
-    //if currently selected a square to swap or not.
+    //if currently selected a square.
     const [isClicked, setIsClicked] = React.useState(false)
 
     //stops making moves and loading animations before content is loaded
@@ -66,6 +66,8 @@ export default function Game(){
     const boltsRef = React.useRef(new Array(boardLength ** 2))
     //animation going on
     const isAnimation = React.useRef(false);
+
+    const left = React.useRef(true)
 
     const gameEnd = React.useRef(false)
     //This Function creates the board when the game starts. It is used in useEffect and only runs once.
@@ -548,6 +550,8 @@ export default function Game(){
         if(!isReady()) return
         //If board is not created do nothing
         if(board.length <= 0) return;
+
+        left.current = true;
         //if a match is found then check no more. If there are more matches check it in the next re-render.
         if(row5()){ swapped.current = false; return}
         else if(col5()){ swapped.current = false; return}
@@ -557,6 +561,9 @@ export default function Game(){
         else if(row3()){ swapped.current = false; return}
         else if(col3()){ swapped.current = false; return}
         //if swapped is true but no match found then revert the move, it was not correct.
+
+        left.current = false
+
         if(swapped.current){
             moves.current++;
             setBoard(prevBoard => {
@@ -606,8 +613,9 @@ export default function Game(){
         if((windowLoaded.current) && (sessionStorage.getItem('nickname') === '' || !sessionStorage.getItem('nickname'))){
             router.push('/')
         } 
+        console.log(left.current)
         if(moves.current > 0) return 
-        if(!isReady()) return
+        if(!isReady() || left.current) return
         if(gameEnd.current) return
         gameEnd.current = true;
         let arr = []
@@ -623,6 +631,7 @@ export default function Game(){
                     score: score.current
                 };
                 (arr && arr.length > 0  && arr.sort((a,b) => a.score - b.score).reverse())
+                console.log(arr)
                 for(let i = 0;i < arr.length; i++){
                     if(arr[i].name === temp.name){
                         arr[i].score = Math.max(temp.score, arr[i].score);
@@ -648,7 +657,7 @@ export default function Game(){
         const changer = () =>{
             router.push('/Endpage')
         }
-        leaderBoardAddition().finally(setTimeout(changer, 600));
+        leaderBoardAddition().finally(setTimeout(changer, 700));
     })
     React.useEffect(()=>{
         score.current = 0;
@@ -1008,9 +1017,6 @@ export default function Game(){
                             onDragOver = {(e) => { e.preventDefault()}}
                             onDragEnter = {(e) => { e.preventDefault()}}
                             onDragLeave = {(e) => { e.preventDefault()}}
-                            onTouchStart = {(e) =>console.log(e.targetTouches[0])}
-                            onTouchMove = {(e) =>console.log()}
-                            onTouchEnd = {(e) =>console.log(e.targetTouches[0])}
                             onDrop = {handleDrop}
                             onClick = {clickHandler}
                             src = {element.src}  
@@ -1046,10 +1052,10 @@ export default function Game(){
                 ))}
                 
             </div>
-            <div className={styles.menu}>
+            {!loading && <div className={styles.menu}>
                 <button onClick={reset} className={styles.refresh}>Refresh</button>
                 <Link href='/Menu' className={styles.quit}>Quit</Link>
-            </div>
+            </div>}
         </div>
     )
 }

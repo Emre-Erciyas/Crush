@@ -5,7 +5,7 @@ import {doc, setDoc,getDoc} from "firebase/firestore";
 import styles from './leaderboard.module.css'
 import '../globals.css'
 import Link from 'next/link';
-import Loading from '@/loading';
+import Loading from './loadingLB';
 export default function Leaderboard() {
     const [leaderboard, setLeaderboard] = React.useState([])
     const [loading, setLoading] = React.useState(true)
