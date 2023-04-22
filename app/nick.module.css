@@ -1,86 +1,84 @@
-.form{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid black;
-    margin: 0;
-    background-color: #D64DCF;
+.form {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid black;
+	margin: 0;
+	background-color: #d64dcf;
 }
 
-.inputDiv{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 25rem;
-    margin-bottom: 1rem;}
-
-.p{
-    font-size: 1.4rem;
-    letter-spacing: 1.8px;
+.inputDiv {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 25rem;
+	margin-bottom: 1rem;
 }
 
-.input{
-    border-radius: 5px;
-    height: 2rem;
-    width: 15rem;
-    letter-spacing: 1.8px;
+.p {
+	font-size: 1.4rem;
+	letter-spacing: 1.8px;
 }
 
-.go{
-    color: #38204F;
-    background-color: #CC69F0;
-    text-decoration: none;
-    width: 240px;
-    height: 96px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 80px;
-    border: 3px solid #38204F;
-    font-size: 1.7rem;
-    letter-spacing: 1.8px;
-}
-.go:hover{
-    cursor: pointer;
-    background-color: #bb2eef;
+.input {
+	border-radius: 5px;
+	height: 2rem;
+	width: 15rem;
+	letter-spacing: 1.8px;
 }
 
-.go:active{
-    background-color: #bb00ff;
-    
+.go {
+	color: #38204f;
+	background-color: #cc69f0;
+	text-decoration: none;
+	width: 240px;
+	height: 96px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 80px;
+	border: 3px solid #38204f;
+	font-size: 1.7rem;
+	letter-spacing: 1.8px;
+}
+.go:hover {
+	cursor: pointer;
+	background-color: #bb2eef;
 }
 
-.icon{
-    margin-right: 10px;
-    margin-top: 5px;
-
+.go:active {
+	background-color: #bb00ff;
 }
 
+.icon {
+	margin-right: 10px;
+	margin-top: 5px;
+}
 
-@media (max-width: 400px){
-    .inputDiv{
-        flex-direction: column;
-        width: 100vw;
-        margin-bottom: 3rem;
-    }
-    .input{
-        width: 80%;
-    }
-    .p{
-        margin-bottom: 3rem;
-        margin-top: 3rem;
-        font-size: 1.2rem;
-    }
-    .go{
-        width: 200px;
-        height: 80px;
-        border: 2px solid #38204F;
-        font-size: 1.5rem;
-    }
-    .form{
-        justify-content: flex-start;
-    }
+@media (max-width: 400px) {
+	.inputDiv {
+		flex-direction: column;
+		width: 100vw;
+		margin-bottom: 3rem;
+	}
+	.input {
+		width: 80%;
+	}
+	.p {
+		margin-bottom: 3rem;
+		margin-top: 3rem;
+		font-size: 1.2rem;
+	}
+	.go {
+		width: 200px;
+		height: 80px;
+		border: 2px solid #38204f;
+		font-size: 1.5rem;
+	}
+	.form {
+		justify-content: flex-start;
+	}
 }

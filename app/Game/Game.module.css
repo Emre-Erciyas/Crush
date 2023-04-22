@@ -1,479 +1,464 @@
-.game{
-    margin: 0;
-    background-image: url("../../public/cute.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    display: flex;
-    height: 640px;
-    width: 640px;
-    flex-wrap: wrap;
-    overflow: hidden;
-    box-sizing: content-box;
-    border:5px solid #38204F;
-
+.game {
+	margin: 0;
+	background-image: url('../../public/cute.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	display: flex;
+	height: 640px;
+	width: 640px;
+	flex-wrap: wrap;
+	overflow: hidden;
+	box-sizing: content-box;
+	border: 5px solid #38204f;
 }
-.fruit{
-    width: 75px;
-    height: 75px;
+.fruit {
+	width: 75px;
+	height: 75px;
 }
-.container{
-    height: 100vh;
-    background-color: #D64DCF;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.left{
-    display: flex;
-    justify-content: space-around;
-    padding: 4px 24px;
+.container {
+	height: 100vh;
+	background-color: #d64dcf;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.score{
-    font-size: 1.8rem;
-    display: flex;
-    align-items:flex-end;
-    margin: 0 10px;
-    color: #38204F;
+.left {
+	display: flex;
+	justify-content: space-around;
+	padding: 4px 24px;
 }
 
-.quit{
-    text-decoration: none;
-    font-size: 1.8rem;
-    color: #38204F;
-    background-color: #B984F8;
-    border-radius: 3px;
-    font-weight: 700;
-    display: flex;
-    align-items:flex-end;
-    margin: 0 10px;
-    padding: 4px 24px;
-}
-.menu{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-}
-.refresh{
-    font-family: "Times New Roman", Times, serif;
-    border: none;
-    text-decoration: none;
-    font-size: 1.8rem;
-    color: #38204F;
-    background-color: #B984F8;
-    border-radius: 3px;
-    font-weight: 700;
-    display: flex;
-    align-items:flex-end;
-    margin: 0 10px;
-    padding: 4px 24px;
+.score {
+	font-size: 1.8rem;
+	display: flex;
+	align-items: flex-end;
+	margin: 0 10px;
+	color: #38204f;
 }
 
-.refresh:hover{
-    cursor: pointer;
+.quit {
+	text-decoration: none;
+	font-size: 1.8rem;
+	color: #38204f;
+	background-color: #b984f8;
+	border-radius: 3px;
+	font-weight: 700;
+	display: flex;
+	align-items: flex-end;
+	margin: 0 10px;
+	padding: 4px 24px;
+}
+.menu {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+}
+.refresh {
+	font-family: 'Times New Roman', Times, serif;
+	border: none;
+	text-decoration: none;
+	font-size: 1.8rem;
+	color: #38204f;
+	background-color: #b984f8;
+	border-radius: 3px;
+	font-weight: 700;
+	display: flex;
+	align-items: flex-end;
+	margin: 0 10px;
+	padding: 4px 24px;
 }
 
-.navbar{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin: 8px 0 24px 0;
+.refresh:hover {
+	cursor: pointer;
+}
+
+.navbar {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	margin: 8px 0 24px 0;
 }
 
 .horizontal {
-    position: absolute;
-    width: 100%;
-    height: 30px;
-    background-color: red;
-    box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7);
-    z-index: 2;
-    filter: blur(6px);
-    visibility: hidden;
-    
+	position: absolute;
+	width: 100%;
+	height: 30px;
+	background-color: red;
+	box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7);
+	z-index: 2;
+	filter: blur(6px);
+	visibility: hidden;
 }
 .vertical {
-    position: absolute;
-    width: 30px;
-    height: 100%;
-    background-color: red;
-    box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7);
-    z-index: 2;
-    filter: blur(6px);
-    visibility: hidden;
+	position: absolute;
+	width: 30px;
+	height: 100%;
+	background-color: red;
+	box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7);
+	z-index: 2;
+	filter: blur(6px);
+	visibility: hidden;
 }
 
 .rotated45 {
-    position: absolute;
-    visibility: hidden;
-    width: 30px;
-    height: 141%;
-    background-color: darkorange;
-    box-shadow: 0 0 30px 10px rgba(255,140,0, 0.7);
-    filter: blur(6px);
-    z-index: 4;
-    transform-origin: 0 0;
-    transform: rotate(45deg);
+	position: absolute;
+	visibility: hidden;
+	width: 30px;
+	height: 141%;
+	background-color: darkorange;
+	box-shadow: 0 0 30px 10px rgba(255, 140, 0, 0.7);
+	filter: blur(6px);
+	z-index: 4;
+	transform-origin: 0 0;
+	transform: rotate(45deg);
 }
 
 .rotated135 {
-    position: absolute;
-    visibility: hidden;
-    width: 30px;
-    height: 141%;
-    background-color: yellow;
-    box-shadow: 0 0 30px 10px rgba(255,255,0, 0.7);
-    filter: blur(6px);
-    z-index: 3;
-    transform-origin: 0 0;
-    transform: rotate(135deg);
+	position: absolute;
+	visibility: hidden;
+	width: 30px;
+	height: 141%;
+	background-color: yellow;
+	box-shadow: 0 0 30px 10px rgba(255, 255, 0, 0.7);
+	filter: blur(6px);
+	z-index: 3;
+	transform-origin: 0 0;
+	transform: rotate(135deg);
 }
 
 .rotated225 {
-    position: absolute;
-    visibility: hidden;
-    width: 30px;
-    height: 141%;
-    background-color: yellow;
-    box-shadow: 0 0 30px 10px rgba(255,255,0, 0.7);
-    filter: blur(6px);
-    z-index: 3;
-    transform-origin: 0 0;
-    transform: rotate(-45deg);
+	position: absolute;
+	visibility: hidden;
+	width: 30px;
+	height: 141%;
+	background-color: yellow;
+	box-shadow: 0 0 30px 10px rgba(255, 255, 0, 0.7);
+	filter: blur(6px);
+	z-index: 3;
+	transform-origin: 0 0;
+	transform: rotate(-45deg);
 }
 
 .rotated315 {
-    position: absolute;
-    visibility: hidden;
-    width: 30px;
-    height: 141%;
-    background-color: darkorange;
-    box-shadow: 0 0 30px 10px rgba(255,140,0, 0.7);
-    filter: blur(6px);
-    z-index: 4;
-    transform-origin: 0 0;
-    transform: rotate(-135deg);
-  }
+	position: absolute;
+	visibility: hidden;
+	width: 30px;
+	height: 141%;
+	background-color: darkorange;
+	box-shadow: 0 0 30px 10px rgba(255, 140, 0, 0.7);
+	filter: blur(6px);
+	z-index: 4;
+	transform-origin: 0 0;
+	transform: rotate(-135deg);
+}
 
 .explosion {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(255, 255, 0, 1);
-    border-radius: 50%;
-    position: absolute;
-    z-index: 2;
-    visibility: hidden;
-    box-shadow: 0 0 25px 20px rgba(255,255,0, 0.9),
-                0 0 50px 35px rgba(255,255,0, 0.8), 
-                0 0 80px 50px rgba(255,255,0, 0.7),
-                0 0 110px 65px rgba(255,255,0, 0.7),
-                0 0 140px 80px rgba(255,255,0, 0.6),
-                0 0 170px 95px rgba(255,255,0, 0.5);
-             
+	width: 60px;
+	height: 60px;
+	background-color: rgba(255, 255, 0, 1);
+	border-radius: 50%;
+	position: absolute;
+	z-index: 2;
+	visibility: hidden;
+	box-shadow: 0 0 25px 20px rgba(255, 255, 0, 0.9),
+		0 0 50px 35px rgba(255, 255, 0, 0.8), 0 0 80px 50px rgba(255, 255, 0, 0.7),
+		0 0 110px 65px rgba(255, 255, 0, 0.7), 0 0 140px 80px rgba(255, 255, 0, 0.6),
+		0 0 170px 95px rgba(255, 255, 0, 0.5);
 }
 .explosion2 {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(255, 255, 0, 1);
-    border-radius: 50%;
-    position: absolute;
-    z-index: 2;
-    visibility: hidden;
-    box-shadow: 0 0 10px 20px rgba(255,255,0, 0.9),
-                0 0 40px 35px rgba(255,255,0, 0.82), 
-                0 0 70px 50px rgba(255,255,0, 0.75),
-                0 0 100px 65px rgba(255,255,0, 0.68),
-                0 0 130px 80px rgba(255,255,0, 0.6),
-                0 0 160px 95px rgba(255,255,0, 0.53),
-                0 0 190px 110px rgba(255,255,0, 0.45),
-                0 0 220px 125px rgba(255,255,0, 0.38),
-                0 0 250px 140px rgba(255,255,0, 0.3),
-                0 0 280px 155px rgba(255,255,0, 0.23),
-                0 0 310px 170px rgba(255,255,0, 0.15);
+	width: 60px;
+	height: 60px;
+	background-color: rgba(255, 255, 0, 1);
+	border-radius: 50%;
+	position: absolute;
+	z-index: 2;
+	visibility: hidden;
+	box-shadow: 0 0 10px 20px rgba(255, 255, 0, 0.9),
+		0 0 40px 35px rgba(255, 255, 0, 0.82), 0 0 70px 50px rgba(255, 255, 0, 0.75),
+		0 0 100px 65px rgba(255, 255, 0, 0.68),
+		0 0 130px 80px rgba(255, 255, 0, 0.6),
+		0 0 160px 95px rgba(255, 255, 0, 0.53),
+		0 0 190px 110px rgba(255, 255, 0, 0.45),
+		0 0 220px 125px rgba(255, 255, 0, 0.38),
+		0 0 250px 140px rgba(255, 255, 0, 0.3),
+		0 0 280px 155px rgba(255, 255, 0, 0.23),
+		0 0 310px 170px rgba(255, 255, 0, 0.15);
 }
 
 .bolt {
-    position: absolute;
-    visibility: hidden;
-    transform-origin: 0 0;
-    width: 40px;
-    z-index: 4;
+	position: absolute;
+	visibility: hidden;
+	transform-origin: 0 0;
+	width: 40px;
+	z-index: 4;
 }
 
-.pineappleExplosionHorizontal{
-    position: absolute;
-    width: 100%;
-    height: 30px;
-    background-color: red;
-    box-shadow: 0 0 30px 30px rgba(255,0,0, 0.7),
-                0 0 30px 40px rgba(255,145,0, 0.7),      
-                0 0 30px 50px rgba(255,255,0, 0.7),                                    
-                0 0 30px 60px rgba(0,255,0, 0.7),                                    
-                0 0 30px 70px rgba(0,255,145, 0.7),
-                0 0 30px 80px rgba(0,255,255, 0.7),                                    
-                0 0 30px 90px rgba(0,0,255, 0.7);                              
-    z-index: 2;
-    filter: blur(6px);
-    visibility: hidden;
+.pineappleExplosionHorizontal {
+	position: absolute;
+	width: 100%;
+	height: 30px;
+	background-color: red;
+	box-shadow: 0 0 30px 30px rgba(255, 0, 0, 0.7),
+		0 0 30px 40px rgba(255, 145, 0, 0.7), 0 0 30px 50px rgba(255, 255, 0, 0.7),
+		0 0 30px 60px rgba(0, 255, 0, 0.7), 0 0 30px 70px rgba(0, 255, 145, 0.7),
+		0 0 30px 80px rgba(0, 255, 255, 0.7), 0 0 30px 90px rgba(0, 0, 255, 0.7);
+	z-index: 2;
+	filter: blur(6px);
+	visibility: hidden;
 }
 .pineappleExplosionVertical {
-    position: absolute;
-    width: 30px;
-    height: 100%;
-    background-color: red;
-    box-shadow: 0 0 30px 30px rgba(255,0,0, 0.7),
-                0 0 30px 40px rgba(255,145,0, 0.7),      
-                0 0 30px 50px rgba(255,255,0, 0.7),                                    
-                0 0 30px 60px rgba(0,255,0, 0.7),                                    
-                0 0 30px 70px rgba(0,255,145, 0.7),
-                0 0 30px 80px rgba(0,255,255, 0.7),                                    
-                0 0 30px 90px rgba(0,0,255, 0.7);        
-    z-index: 2;
-    filter: blur(6px);
-    visibility: hidden;
+	position: absolute;
+	width: 30px;
+	height: 100%;
+	background-color: red;
+	box-shadow: 0 0 30px 30px rgba(255, 0, 0, 0.7),
+		0 0 30px 40px rgba(255, 145, 0, 0.7), 0 0 30px 50px rgba(255, 255, 0, 0.7),
+		0 0 30px 60px rgba(0, 255, 0, 0.7), 0 0 30px 70px rgba(0, 255, 145, 0.7),
+		0 0 30px 80px rgba(0, 255, 255, 0.7), 0 0 30px 90px rgba(0, 0, 255, 0.7);
+	z-index: 2;
+	filter: blur(6px);
+	visibility: hidden;
 }
 
-.fruitHolder{
-    margin: 0;
-    padding: 0;
-    height: 80px;
-    width: 80px;
-    
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.fruitHolder {
+	margin: 0;
+	padding: 0;
+	height: 80px;
+	width: 80px;
+
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-@media (max-width: 656px),(max-height: 800px){
-    .score, .quit, .refresh{
-        font-size: 1.2rem;
-    }
-    .game{
-        height:480px;
-        width:480px;
-    }
-    .fruit{
-        height: 58px;
-        width: 58px;
-    }
-    .vertical, .rotated45, .rotated135, .rotated225, .rotated315{
-        width:20px;
-    }
-    .horizontal{
-        height: 20px;
-    }
-    .bolt{
-        width: 35px;
-    }
-    .explosion{
-        width: 45px;
-        height: 45px;
-        box-shadow: 0 0 25px 25px rgba(255,255,0, 0.9),
-                0 0 50px 30px rgba(255,255,0, 0.8), 
-                0 0 80px 40px rgba(255,255,0, 0.7),
-                0 0 110px 50px rgba(255,255,0, 0.7),
-                0 0 140px 60px rgba(255,255,0, 0.6),
-                0 0 170px 70px rgba(255,255,0, 0.5);
-    }
-    .explosion2{
-        width: 45px;
-        height: 45px;
-        box-shadow: 0 0 10px 20px rgba(255,255,0, 0.9),
-                0 0 40px 35px rgba(255,255,0, 0.82), 
-                0 0 70px 50px rgba(255,255,0, 0.75),
-                0 0 100px 65px rgba(255,255,0, 0.68),
-                0 0 130px 80px rgba(255,255,0, 0.6),
-                0 0 160px 90px rgba(255,255,0, 0.53),
-                0 0 190px 100px rgba(255,255,0, 0.45),
-                0 0 220px 110px rgba(255,255,0, 0.38),
-                0 0 250px 120px rgba(255,255,0, 0.3),
-                0 0 280px 130px rgba(255,255,0, 0.23),
-                0 0 310px 140px rgba(255,255,0, 0.15);
-    }
-    .pineappleExplosionVertical{
-        width: 25px;
-        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
-                0 0 30px 15px rgba(255,145,0, 0.7),      
-                0 0 40px 25px rgba(255,255,0, 0.7),                                    
-                0 0 50px 30px rgba(0,255,0, 0.5),                                    
-                0 0 60px 35px rgba(0,255,145, 0.55),
-                0 0 70px 45px rgba(0,255,255, 0.5),                                    
-                0 0 80px 55px rgba(0,0,255, 0.5);   
-    }
-    .pineappleExplosionHorizontal{
-        height: 25px;
-        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
-                0 0 30px 15px rgba(255,145,0, 0.7),      
-                0 0 40px 25px rgba(255,255,0, 0.7),                                    
-                0 0 50px 30px rgba(0,255,0, 0.5),                                    
-                0 0 60px 35px rgba(0,255,145, 0.55),
-                0 0 70px 45px rgba(0,255,255, 0.5),                                    
-                0 0 80px 55px rgba(0,0,255, 0.5);        
-    }
-    .fruitHolder{
-        width: 60px;
-        height: 60px;
-    }
+@media (max-width: 656px), (max-height: 800px) {
+	.score,
+	.quit,
+	.refresh {
+		font-size: 1.2rem;
+	}
+	.game {
+		height: 480px;
+		width: 480px;
+	}
+	.fruit {
+		height: 58px;
+		width: 58px;
+	}
+	.vertical,
+	.rotated45,
+	.rotated135,
+	.rotated225,
+	.rotated315 {
+		width: 20px;
+	}
+	.horizontal {
+		height: 20px;
+	}
+	.bolt {
+		width: 35px;
+	}
+	.explosion {
+		width: 45px;
+		height: 45px;
+		box-shadow: 0 0 25px 25px rgba(255, 255, 0, 0.9),
+			0 0 50px 30px rgba(255, 255, 0, 0.8), 0 0 80px 40px rgba(255, 255, 0, 0.7),
+			0 0 110px 50px rgba(255, 255, 0, 0.7),
+			0 0 140px 60px rgba(255, 255, 0, 0.6),
+			0 0 170px 70px rgba(255, 255, 0, 0.5);
+	}
+	.explosion2 {
+		width: 45px;
+		height: 45px;
+		box-shadow: 0 0 10px 20px rgba(255, 255, 0, 0.9),
+			0 0 40px 35px rgba(255, 255, 0, 0.82),
+			0 0 70px 50px rgba(255, 255, 0, 0.75),
+			0 0 100px 65px rgba(255, 255, 0, 0.68),
+			0 0 130px 80px rgba(255, 255, 0, 0.6),
+			0 0 160px 90px rgba(255, 255, 0, 0.53),
+			0 0 190px 100px rgba(255, 255, 0, 0.45),
+			0 0 220px 110px rgba(255, 255, 0, 0.38),
+			0 0 250px 120px rgba(255, 255, 0, 0.3),
+			0 0 280px 130px rgba(255, 255, 0, 0.23),
+			0 0 310px 140px rgba(255, 255, 0, 0.15);
+	}
+	.pineappleExplosionVertical {
+		width: 25px;
+		box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7),
+			0 0 30px 15px rgba(255, 145, 0, 0.7), 0 0 40px 25px rgba(255, 255, 0, 0.7),
+			0 0 50px 30px rgba(0, 255, 0, 0.5), 0 0 60px 35px rgba(0, 255, 145, 0.55),
+			0 0 70px 45px rgba(0, 255, 255, 0.5), 0 0 80px 55px rgba(0, 0, 255, 0.5);
+	}
+	.pineappleExplosionHorizontal {
+		height: 25px;
+		box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7),
+			0 0 30px 15px rgba(255, 145, 0, 0.7), 0 0 40px 25px rgba(255, 255, 0, 0.7),
+			0 0 50px 30px rgba(0, 255, 0, 0.5), 0 0 60px 35px rgba(0, 255, 145, 0.55),
+			0 0 70px 45px rgba(0, 255, 255, 0.5), 0 0 80px 55px rgba(0, 0, 255, 0.5);
+	}
+	.fruitHolder {
+		width: 60px;
+		height: 60px;
+	}
 }
-@media (max-width: 496px),(max-height: 612px){
-    .score, .quit, .refresh{
-        font-size: 0.8rem;
-    }
-    .score{
-        margin: 0 5px;
-    }
-    .left{
-        padding: 4px;
-    }
-    .navbar{
-        padding: 8px 0px ;
-    }
-    .game{
-        height:320px;
-        width:320px;
-    }
-    .fruit{
-        height: 38px;
-        width: 38px;
-    }
-    .vertical, .rotated45, .rotated135, .rotated225, .rotated315{
-        width:10px;
-    }
-    .horizontal{
-        height: 10px;
-    }
-    .bolt{
-        width: 30px;
-    }
-    .explosion{
-        width: 25px;
-        height: 25px;
-        box-shadow: 0 0 25px 25px rgba(255,255,0, 0.9),
-                0 0 50px 30px rgba(255,255,0, 0.8), 
-                0 0 80px 40px rgba(255,255,0, 0.7),
-                0 0 110px 50px rgba(255,255,0, 0.7),
-                0 0 140px 60px rgba(255,255,0, 0.6),
-                0 0 170px 70px rgba(255,255,0, 0.5);
-    }
-    .explosion2{
-        width: 25px;
-        height: 25px;
-        box-shadow: 0 0 10px 20px rgba(255,255,0, 0.9),
-                0 0 40px 35px rgba(255,255,0, 0.82), 
-                0 0 70px 50px rgba(255,255,0, 0.75),
-                0 0 100px 65px rgba(255,255,0, 0.68),
-                0 0 130px 80px rgba(255,255,0, 0.6),
-                0 0 160px 90px rgba(255,255,0, 0.53),
-                0 0 190px 100px rgba(255,255,0, 0.45),
-                0 0 220px 110px rgba(255,255,0, 0.38),
-                0 0 250px 120px rgba(255,255,0, 0.3),
-                0 0 280px 130px rgba(255,255,0, 0.23),
-                0 0 310px 140px rgba(255,255,0, 0.15);
-    }
-    .pineappleExplosionVertical{
-        width: 15px;
-        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
-                0 0 30px 15px rgba(255,145,0, 0.7),      
-                0 0 40px 25px rgba(255,255,0, 0.7),                                    
-                0 0 50px 30px rgba(0,255,0, 0.5),                                    
-                0 0 60px 35px rgba(0,255,145, 0.55),
-                0 0 70px 45px rgba(0,255,255, 0.5),                                    
-                0 0 80px 55px rgba(0,0,255, 0.5);   
-    }
-    .pineappleExplosionHorizontal{
-        height: 15px;
-        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
-                0 0 30px 15px rgba(255,145,0, 0.7),      
-                0 0 40px 25px rgba(255,255,0, 0.7),                                    
-                0 0 50px 30px rgba(0,255,0, 0.5),                                    
-                0 0 60px 35px rgba(0,255,145, 0.55),
-                0 0 70px 45px rgba(0,255,255, 0.5),                                    
-                0 0 80px 55px rgba(0,0,255, 0.5);        
-    }
-    .fruitHolder{
-        width: 40px;
-        height: 40px;
-    }
+@media (max-width: 496px), (max-height: 612px) {
+	.score,
+	.quit,
+	.refresh {
+		font-size: 0.8rem;
+	}
+	.score {
+		margin: 0 5px;
+	}
+	.left {
+		padding: 4px;
+	}
+	.navbar {
+		padding: 8px 0px;
+	}
+	.game {
+		height: 320px;
+		width: 320px;
+	}
+	.fruit {
+		height: 38px;
+		width: 38px;
+	}
+	.vertical,
+	.rotated45,
+	.rotated135,
+	.rotated225,
+	.rotated315 {
+		width: 10px;
+	}
+	.horizontal {
+		height: 10px;
+	}
+	.bolt {
+		width: 30px;
+	}
+	.explosion {
+		width: 25px;
+		height: 25px;
+		box-shadow: 0 0 25px 25px rgba(255, 255, 0, 0.9),
+			0 0 50px 30px rgba(255, 255, 0, 0.8), 0 0 80px 40px rgba(255, 255, 0, 0.7),
+			0 0 110px 50px rgba(255, 255, 0, 0.7),
+			0 0 140px 60px rgba(255, 255, 0, 0.6),
+			0 0 170px 70px rgba(255, 255, 0, 0.5);
+	}
+	.explosion2 {
+		width: 25px;
+		height: 25px;
+		box-shadow: 0 0 10px 20px rgba(255, 255, 0, 0.9),
+			0 0 40px 35px rgba(255, 255, 0, 0.82),
+			0 0 70px 50px rgba(255, 255, 0, 0.75),
+			0 0 100px 65px rgba(255, 255, 0, 0.68),
+			0 0 130px 80px rgba(255, 255, 0, 0.6),
+			0 0 160px 90px rgba(255, 255, 0, 0.53),
+			0 0 190px 100px rgba(255, 255, 0, 0.45),
+			0 0 220px 110px rgba(255, 255, 0, 0.38),
+			0 0 250px 120px rgba(255, 255, 0, 0.3),
+			0 0 280px 130px rgba(255, 255, 0, 0.23),
+			0 0 310px 140px rgba(255, 255, 0, 0.15);
+	}
+	.pineappleExplosionVertical {
+		width: 15px;
+		box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7),
+			0 0 30px 15px rgba(255, 145, 0, 0.7), 0 0 40px 25px rgba(255, 255, 0, 0.7),
+			0 0 50px 30px rgba(0, 255, 0, 0.5), 0 0 60px 35px rgba(0, 255, 145, 0.55),
+			0 0 70px 45px rgba(0, 255, 255, 0.5), 0 0 80px 55px rgba(0, 0, 255, 0.5);
+	}
+	.pineappleExplosionHorizontal {
+		height: 15px;
+		box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7),
+			0 0 30px 15px rgba(255, 145, 0, 0.7), 0 0 40px 25px rgba(255, 255, 0, 0.7),
+			0 0 50px 30px rgba(0, 255, 0, 0.5), 0 0 60px 35px rgba(0, 255, 145, 0.55),
+			0 0 70px 45px rgba(0, 255, 255, 0.5), 0 0 80px 55px rgba(0, 0, 255, 0.5);
+	}
+	.fruitHolder {
+		width: 40px;
+		height: 40px;
+	}
 }
-@media (max-width: 348px),(max-height: 450px){
-    .score, .quit, .refresh{
-        font-size: 0.5rem;
-    }
-    .left{
-        padding: 4px;
-    }
-    .navbar{
-        padding: 8px 0px ;
-    }
-    .game{
-        height:264px;
-        width:264px;
-    }
-    .fruit{
-        height: 30px;
-        width: 30px;
-    }
-    .vertical, .rotated45, .rotated135, .rotated225, .rotated315{
-        width:10px;
-    }
-    .horizontal{
-        height: 10px;
-    }
-    .bolt{
-        width: 30px;
-    }
-    .explosion{
-        width: 25px;
-        height: 25px;
-        box-shadow: 0 0 25px 25px rgba(255,255,0, 0.9),
-                0 0 50px 30px rgba(255,255,0, 0.8), 
-                0 0 80px 40px rgba(255,255,0, 0.7),
-                0 0 110px 50px rgba(255,255,0, 0.7),
-                0 0 140px 60px rgba(255,255,0, 0.6),
-                0 0 170px 70px rgba(255,255,0, 0.5);
-    }
-    .explosion2{
-        width: 25px;
-        height: 25px;
-        box-shadow: 0 0 10px 20px rgba(255,255,0, 0.9),
-                0 0 40px 35px rgba(255,255,0, 0.82), 
-                0 0 70px 50px rgba(255,255,0, 0.75),
-                0 0 100px 65px rgba(255,255,0, 0.68),
-                0 0 130px 80px rgba(255,255,0, 0.6),
-                0 0 160px 90px rgba(255,255,0, 0.53),
-                0 0 190px 100px rgba(255,255,0, 0.45),
-                0 0 220px 110px rgba(255,255,0, 0.38),
-                0 0 250px 120px rgba(255,255,0, 0.3),
-                0 0 280px 130px rgba(255,255,0, 0.23),
-                0 0 310px 140px rgba(255,255,0, 0.15);
-    }
-    .pineappleExplosionVertical{
-        width: 15px;
-        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
-                0 0 30px 15px rgba(255,145,0, 0.7),      
-                0 0 40px 25px rgba(255,255,0, 0.7),                                    
-                0 0 50px 30px rgba(0,255,0, 0.5),                                    
-                0 0 60px 35px rgba(0,255,145, 0.55),
-                0 0 70px 45px rgba(0,255,255, 0.5),                                    
-                0 0 80px 55px rgba(0,0,255, 0.5);   
-    }
-    .pineappleExplosionHorizontal{
-        height: 15px;
-        box-shadow: 0 0 30px 10px rgba(255,0,0, 0.7),
-                0 0 30px 15px rgba(255,145,0, 0.7),      
-                0 0 40px 25px rgba(255,255,0, 0.7),                                    
-                0 0 50px 30px rgba(0,255,0, 0.5),                                    
-                0 0 60px 35px rgba(0,255,145, 0.55),
-                0 0 70px 45px rgba(0,255,255, 0.5),                                    
-                0 0 80px 55px rgba(0,0,255, 0.5);        
-    }
-    .fruitHolder{
-        width: 33px;
-        height: 33px;
-    }
+@media (max-width: 348px), (max-height: 450px) {
+	.score,
+	.quit,
+	.refresh {
+		font-size: 0.5rem;
+	}
+	.left {
+		padding: 4px;
+	}
+	.navbar {
+		padding: 8px 0px;
+	}
+	.game {
+		height: 264px;
+		width: 264px;
+	}
+	.fruit {
+		height: 30px;
+		width: 30px;
+	}
+	.vertical,
+	.rotated45,
+	.rotated135,
+	.rotated225,
+	.rotated315 {
+		width: 10px;
+	}
+	.horizontal {
+		height: 10px;
+	}
+	.bolt {
+		width: 30px;
+	}
+	.explosion {
+		width: 25px;
+		height: 25px;
+		box-shadow: 0 0 25px 25px rgba(255, 255, 0, 0.9),
+			0 0 50px 30px rgba(255, 255, 0, 0.8), 0 0 80px 40px rgba(255, 255, 0, 0.7),
+			0 0 110px 50px rgba(255, 255, 0, 0.7),
+			0 0 140px 60px rgba(255, 255, 0, 0.6),
+			0 0 170px 70px rgba(255, 255, 0, 0.5);
+	}
+	.explosion2 {
+		width: 25px;
+		height: 25px;
+		box-shadow: 0 0 10px 20px rgba(255, 255, 0, 0.9),
+			0 0 40px 35px rgba(255, 255, 0, 0.82),
+			0 0 70px 50px rgba(255, 255, 0, 0.75),
+			0 0 100px 65px rgba(255, 255, 0, 0.68),
+			0 0 130px 80px rgba(255, 255, 0, 0.6),
+			0 0 160px 90px rgba(255, 255, 0, 0.53),
+			0 0 190px 100px rgba(255, 255, 0, 0.45),
+			0 0 220px 110px rgba(255, 255, 0, 0.38),
+			0 0 250px 120px rgba(255, 255, 0, 0.3),
+			0 0 280px 130px rgba(255, 255, 0, 0.23),
+			0 0 310px 140px rgba(255, 255, 0, 0.15);
+	}
+	.pineappleExplosionVertical {
+		width: 15px;
+		box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7),
+			0 0 30px 15px rgba(255, 145, 0, 0.7), 0 0 40px 25px rgba(255, 255, 0, 0.7),
+			0 0 50px 30px rgba(0, 255, 0, 0.5), 0 0 60px 35px rgba(0, 255, 145, 0.55),
+			0 0 70px 45px rgba(0, 255, 255, 0.5), 0 0 80px 55px rgba(0, 0, 255, 0.5);
+	}
+	.pineappleExplosionHorizontal {
+		height: 15px;
+		box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.7),
+			0 0 30px 15px rgba(255, 145, 0, 0.7), 0 0 40px 25px rgba(255, 255, 0, 0.7),
+			0 0 50px 30px rgba(0, 255, 0, 0.5), 0 0 60px 35px rgba(0, 255, 145, 0.55),
+			0 0 70px 45px rgba(0, 255, 255, 0.5), 0 0 80px 55px rgba(0, 0, 255, 0.5);
+	}
+	.fruitHolder {
+		width: 33px;
+		height: 33px;
+	}
 }
