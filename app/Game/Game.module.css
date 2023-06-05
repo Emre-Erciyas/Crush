@@ -307,6 +307,7 @@
 		height: 60px;
 	}
 }
+
 @media (max-width: 496px), (max-height: 612px) {
 	.score,
 	.quit,

@@ -921,9 +921,9 @@ export default function Game() {
 		gameEnd.current = false;
 		windowLoaded.current = typeof window !== 'undefined';
 		if (windowLoaded.current) {
-			if (innerWidth >= 656) imageWidth.current = 80;
-			else if (innerWidth >= 496) imageWidth.current = 60;
-			else if (innerWidth >= 348) imageWidth.current = 40;
+			if (innerWidth >= 656 && innerHeight >= 800) imageWidth.current = 80;
+			else if (innerWidth >= 496 && innerHeight >= 612) imageWidth.current = 60;
+			else if (innerWidth >= 348 && innerHeight >= 450) imageWidth.current = 40;
 			else imageWidth.current = 33;
 		}
 	}, []);
@@ -934,10 +934,14 @@ export default function Game() {
 
 	React.useEffect(() => {
 		function handleResize() {
-			if (innerWidth >= 656) imageWidth.current = 80;
-			else if (innerWidth >= 496) imageWidth.current = 60;
-			else if (innerWidth >= 348) imageWidth.current = 40;
-			else imageWidth.current = 33;
+			if (windowLoaded.current) {
+				if (innerWidth >= 656 && innerHeight >= 800) imageWidth.current = 80;
+				else if (innerWidth >= 496 && innerHeight >= 612)
+					imageWidth.current = 60;
+				else if (innerWidth >= 348 && innerHeight >= 450)
+					imageWidth.current = 40;
+				else imageWidth.current = 33;
+			}
 		}
 		if (windowLoaded.current) window.addEventListener('resize', handleResize);
 
