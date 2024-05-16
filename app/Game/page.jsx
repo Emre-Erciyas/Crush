@@ -868,7 +868,6 @@ export default function Game() {
 		) {
 			router.push('/');
 		}
-		console.log(left.current);
 		if (moves.current > 0) return;
 		if (!isReady() || left.current) return;
 		if (gameEnd.current) return;
@@ -888,7 +887,6 @@ export default function Game() {
 				arr &&
 					arr.length > 0 &&
 					arr.sort((a, b) => a.score - b.score).reverse();
-				console.log(arr);
 				for (let i = 0; i < arr.length; i++) {
 					if (arr[i].name === temp.name) {
 						arr[i].score = Math.max(temp.score, arr[i].score);
@@ -1612,6 +1610,7 @@ export default function Game() {
 							name={element.name}
 							onLoad={handleLoad}
 							priority
+							loading="eager"
 							alt={element.name}
 						/>
 					</div>
